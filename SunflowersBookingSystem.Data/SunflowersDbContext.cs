@@ -1,5 +1,6 @@
 ﻿namespace SunflowersBookingSystem.Data
 {
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.EntityFrameworkCore;
     using SunflowersBookingSystem.Data.Models;
 
@@ -25,12 +26,18 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             base.OnModelCreating(builder);
 
-            builder.Entity<User>()
-                .HasData(new User { Id = 1, Name = "Stoyan"},new User { Id = 2, Name = "Elisabeth"});
+            builder.Ignore<IdentityUserLogin>();
+            builder.Ignore<IdentityUserRole>();
+            builder.Ignore<IdentityUserClaim>();
 
+            builder.Entity<User>()
+                .HasKey(u => u.Id);
+            builder.Entity<User>()
+                .HasData(
+                new User { Id = 1, FirstName = "Stoyan",SecondName = "Grancharov"},
+                new User { Id = 2, FirstName = "Elisabeth", SecondName = "Ivanova"});
         }
     }
 }
