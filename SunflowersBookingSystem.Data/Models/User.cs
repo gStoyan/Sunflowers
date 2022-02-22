@@ -1,10 +1,11 @@
 ﻿namespace SunflowersBookingSystem.Data.Models
 {
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
-    public class User
+    public class User : IdentityUser<int>
     {
 
         [Column("Id")]
@@ -13,9 +14,19 @@
         [Required]
         public int Id { get; set; }
 
-        [Column("UserName")]
+
+        [Column("FirstName")]
         [Required]
-        [StringLength(50)]
-        public string Name { get; set; }
+        [MaxLength(50)]
+        [MinLength(1)]
+        public string FirstName { get; set; }
+
+        [Column("SecondName")]
+        [Required]
+        [MaxLength(50)]
+        [MinLength(1)]
+        public string SecondName { get; set; }
+
+
     }
 }

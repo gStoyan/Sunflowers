@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SunflowersBookingSystem.Data;
 
@@ -11,9 +12,10 @@ using SunflowersBookingSystem.Data;
 namespace SunflowersBookingSystem.Data.Migrations
 {
     [DbContext(typeof(SunflowersDbContext))]
-    partial class SunflowersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220221190335_ChangedNameOfUsersTable")]
+    partial class ChangedNameOfUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,7 @@ namespace SunflowersBookingSystem.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("SunflowersBookingSystem.Data.Models.User", b =>
+            modelBuilder.Entity("SunflowersBookingSystem.Data.Models.Users", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,9 +35,6 @@ namespace SunflowersBookingSystem.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -52,14 +51,8 @@ namespace SunflowersBookingSystem.Data.Migrations
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("LockoutEndDateUtc")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -94,7 +87,6 @@ namespace SunflowersBookingSystem.Data.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "997f0d89-a0a9-4f8a-bdd8-0089f11dd718",
                             EmailConfirmed = false,
                             FirstName = "Stoyan",
                             LockoutEnabled = false,
@@ -106,7 +98,6 @@ namespace SunflowersBookingSystem.Data.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3d0f88ce-8db2-43d1-9672-38bb75d0a0bd",
                             EmailConfirmed = false,
                             FirstName = "Elisabeth",
                             LockoutEnabled = false,
