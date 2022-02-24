@@ -30,6 +30,10 @@
         {
             var result = await userManager.CreateAsync(user);
 
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
             return Ok(user);
         }
 
