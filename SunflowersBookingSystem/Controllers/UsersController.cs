@@ -28,8 +28,8 @@
         [HttpPost]
         public async Task<ActionResult> Create(User user)
         {
+            user.PasswordHash = userManager.PasswordHasher.HashPassword(user, user.PasswordHash);
             var result = await userManager.CreateAsync(user);
-
             if (!result.Succeeded)
             {
                 return BadRequest(result.Errors);
