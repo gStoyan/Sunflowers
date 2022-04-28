@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SunflowersBookingSystem.Data;
 
@@ -11,9 +12,10 @@ using SunflowersBookingSystem.Data;
 namespace SunflowersBookingSystem.Data.Migrations
 {
     [DbContext(typeof(SunflowersDbContext))]
-    partial class SunflowersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220224210246_PendingChanges2")]
+    partial class PendingChanges2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,7 +96,7 @@ namespace SunflowersBookingSystem.Data.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "215de305-2fdd-4c7e-a802-486ae8275190",
+                            ConcurrencyStamp = "37c02888-a8be-4142-befa-a81272bd1f5d",
                             EmailConfirmed = false,
                             FirstName = "Stoyan",
                             LockoutEnabled = false,
@@ -106,7 +108,7 @@ namespace SunflowersBookingSystem.Data.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "225bc5be-fdd0-4682-8df6-bb6200f67be0",
+                            ConcurrencyStamp = "fa4b8e00-4cbc-42e9-8ae9-a249b778e9b4",
                             EmailConfirmed = false,
                             FirstName = "Elisabeth",
                             LockoutEnabled = false,
