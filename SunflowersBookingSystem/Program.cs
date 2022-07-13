@@ -1,18 +1,30 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using SunflowersBookingSystem.Data;
 using SunflowersBookingSystem.Data.Models;
+using Serilog.Settings.Configuration;
 using SunflowersBookingSystem.Services.Helpers;
 using SunflowersBookingSystem.Services.Mapping;
 using SunflowersBookingSystem.Services.Users;
 using SunflowersBookingSystem.Services.Users.Interfaces;
 using SunflowersBookingSystem.Web.Helpers;
+using Serilog.Events;
+using Serilog.Formatting.Compact;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args); 
+// Configure Logger
+var logger = new LoggerConfiguration()
+   .ReadFrom.Configuration(builder.Configuration)
+   .MinimumLevel.Debug()
+   .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+   .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+   //.WriteTo.File(new CompactJsonFormatter(), "log.txt")
+   .CreateLogger();
+builder.Logging.AddSerilog(logger);
 
 // Add services to the container.
-
 builder.Services.AddDbContext<SunflowersDbContext>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -50,7 +62,6 @@ builder.Services.AddSwaggerGen(c => {
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
-
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddSingleton(ConfigureMapperService());
 
@@ -88,4 +99,5 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.Logger.LogInformation(MyLogEvents.TestItem, "Starting the application.");
 app.Run();
