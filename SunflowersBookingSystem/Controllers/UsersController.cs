@@ -6,6 +6,7 @@
     using SunflowersBookingSystem.Services.Helpers;
     using SunflowersBookingSystem.Services.Models;
     using SunflowersBookingSystem.Services.Users.Interfaces;
+    using SunflowersBookingSystem.Web.Helpers;
 
     [Authorize]
     [ApiController]
@@ -14,7 +15,7 @@
     {
         private IUserService _userService;
         private readonly AppSettings _appSettings;
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         public UsersController(IUserService userService, IOptions<AppSettings> appSettings, ILogger<UsersController> logger)
         {
@@ -28,7 +29,7 @@
         public IActionResult Authenticate(AuthenticateRequest model)
         {
             var response = _userService.Authenticate(model);
-            _logger.LogInformation($"{response.FirstName} authenticated");
+            _logger.LogInformation(MyLogEvents.GetItem, $"{response.FirstName} authenticated");
             return Ok(response);
 
         }
@@ -38,6 +39,7 @@
         public IActionResult Register(RegisterRequest model)
         {
             _userService.Register(model);
+            _logger.LogInformation(MyLogEvents.InsertItem, $"{model.FirstName} user registered.");
             return Ok(new { message = "Registration successful" });
         }
 

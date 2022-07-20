@@ -20,6 +20,7 @@ var logger = new LoggerConfiguration()
    .MinimumLevel.Debug()
    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+   .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
    //.WriteTo.File(new CompactJsonFormatter(), "log.txt")
    .CreateLogger();
 builder.Logging.AddSerilog(logger);
