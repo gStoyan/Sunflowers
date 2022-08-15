@@ -34,4 +34,9 @@
     <ProjectReference Include="..\SunflowersBookingSystem.Services\SunflowersBookingSystem.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\cdd\" />
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
 </Project>

@@ -28,18 +28,19 @@
             _logger = logger;
         }
 
-        [AllowAnonymous]
+        [CustomAllowAnonymous]
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromForm] AuthenticateRequest model)
         {
             var response = _userService.Authenticate(model);
             _logger.LogInformation(MyLogEvents.GetItem, $"{response.FirstName} authenticated");
             Response.Cookies.Append("Bearer", response.Token);
+            Response.Cookies.Append("User", response.FirstName);
             return new RedirectToPageResult("/Users/Profile");
 
         }
 
-        [AllowAnonymous]
+        [CustomAllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromForm] RegisterRequest model)
         {
@@ -49,8 +50,7 @@
             return new RedirectToPageResult("/About");
         }
 
-        [HttpGet]
-        [Route("/Users/GetAll")]
+        [HttpGet("GetAll")]
         public IActionResult GetAllUsers()
         {
             var users = _userService.GetAllUsers();
@@ -59,12 +59,14 @@
             return new RedirectToPageResult("/Users/GetAllUsers", users);
         }
 
-        [HttpGet]
-        [Route("/LogOut")]
+        [HttpGet("LogOut")]
         public IActionResult LogOut()
         {
-            HttpContext.Session.Clear();
-            return new RedirectToPageResult("Index");
+            Response.Cookies.Delete("Bearer");
+            var username = Request.Cookies["User"];
+            Response.Cookies.Delete("User");
+            _logger.LogInformation(MyLogEvents.DeleteItem, $"{username} logged out. Deleted cookies.");
+            return new RedirectToPageResult("/Index");
         }
     }
 }

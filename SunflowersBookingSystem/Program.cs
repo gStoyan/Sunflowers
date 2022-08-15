@@ -40,8 +40,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c => {
 	c.SwaggerDoc("v1", new OpenApiInfo
 	{
-		Title = "JWTToken_Auth_API",
-		Version = "v1"
+		Title = "JWTToken_Auth_API"
 	});
 	c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
 	{
@@ -101,8 +100,8 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseMiddleware<JwtMiddleware>();
 
 app.MapRazorPages();
-
-app.UseAuthentication();`
+app.UseStaticFiles();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseMvc(routes =>
