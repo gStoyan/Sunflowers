@@ -1,17 +1,18 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using SunflowersBookingSystem.Data;
-using SunflowersBookingSystem.Data.Models;
-using Serilog.Settings.Configuration;
 using SunflowersBookingSystem.Services.Helpers;
 using SunflowersBookingSystem.Services.Mapping;
 using SunflowersBookingSystem.Services.Users;
 using SunflowersBookingSystem.Services.Users.Interfaces;
 using SunflowersBookingSystem.Web.Helpers;
 using Serilog.Events;
-using Serilog.Formatting.Compact;
+using Newtonsoft.Json.Serialization;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args); 
 // Configure Logger
@@ -26,6 +27,10 @@ var logger = new LoggerConfiguration()
 builder.Logging.AddSerilog(logger);
 
 // Add services to the container.
+builder.Services.AddRazorPages();
+builder.Services.AddMvc(options => options.EnableEndpointRouting = false)
+	.AddNewtonsoftJson(o => o.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
 builder.Services.AddDbContext<SunflowersDbContext>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -86,19 +91,31 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 
-	// global error handler
-	app.UseMiddleware<ErrorHandlerMiddleware>();
-
-	// custom jwt auth middleware
-	app.UseMiddleware<JwtMiddleware>();
-
 	app.MapControllers();
 }
-app.MapControllers();
 
-app.UseHttpsRedirection();
+// global error handler
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
+// custom jwt auth middleware
+app.UseMiddleware<JwtMiddleware>();
+
+app.MapRazorPages();
+
+app.UseAuthentication();`
 app.UseAuthorization();
+app.UseHttpsRedirection();
+app.UseMvc(routes =>
+{
+	// need route and attribute on controller: [Area("Blogs")]
+	routes.MapRoute(name: "mvcAreaRoute",
+					template: "{area:exists}/{controller=Home}/{action=Index}");
+
+	// default route for non-areas
+	routes.MapRoute(
+		name: "default",
+		template: "{controller=Home}/{action=Index}/{id?}");
+});
 
 app.Logger.LogInformation(MyLogEvents.TestItem, "Starting the application.");
 app.Run();

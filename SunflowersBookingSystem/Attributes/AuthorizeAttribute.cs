@@ -5,12 +5,12 @@
     using SunflowersBookingSystem.Data.Models;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class AuthorizeAttribute : Attribute, IAuthorizationFilter
+    public class CustomAuthorize : Attribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             // skip authorization if action is decorated with [AllowAnonymous] attribute
-            var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
+            var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<CustomAllowAnonymous>().Any();
             if (allowAnonymous)
                 return;
 

@@ -1,6 +1,7 @@
 ﻿namespace SunflowersBookingSystem.Web.Helpers
 {
     using Microsoft.AspNetCore.Http;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,18 +11,20 @@
     using System.Threading.Tasks;
     internal class ErrorHandlerMiddleware
     {
-        private readonly RequestDelegate next;
+        private readonly RequestDelegate _next;
+        private readonly ILogger _logger;
 
-        public ErrorHandlerMiddleware(RequestDelegate next)
+        public ErrorHandlerMiddleware(RequestDelegate next,ILogger<ErrorHandlerMiddleware> logger )
         {
-            this.next = next;
+            _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
         {
             try
             {
-                await next(context);
+                await _next(context);
             }
             catch (Exception error)
             {
@@ -44,7 +47,8 @@
                         break;
                 }
 
-                var result = JsonSerializer.Serialize(new { message = error?.Message });
+                var result = JsonConvert.SerializeObject(new { message = error?.Message }, Formatting.Indented);
+                _logger.LogError(MyLogEvents.ErrorHandler, result);
                 await response.WriteAsync(result);
             }
         }

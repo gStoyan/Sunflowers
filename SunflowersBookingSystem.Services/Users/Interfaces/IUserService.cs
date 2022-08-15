@@ -6,7 +6,7 @@
     public interface IUserService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
-        IEnumerable<User> GetAll();
+        IEnumerable<User> GetAllUsers();
         User GetById(int id);
         void Register(RegisterRequest model);
         //void Update(int id, UpdateRequest model);

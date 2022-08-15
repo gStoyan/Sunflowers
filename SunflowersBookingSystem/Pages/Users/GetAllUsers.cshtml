@@ -1,0 +1,14 @@
+﻿@page
+@model SunflowersBookingSystem.Web.Pages.GetAllUsersModel
+
+<a asp-controller="Users"
+   asp-action="LogOut">Log Out</a>
+@{
+    foreach (var user in Model.Users)
+    {
+        <p>
+        asd
+            @user.FirstName
+        </p>
+    }
+}

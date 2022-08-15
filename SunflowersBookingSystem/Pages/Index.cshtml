@@ -1,0 +1,25 @@
+﻿@page
+@using SunflowersBookingSystem.Web.Models
+@model RegisterViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Hello, world!</h1>
+<h2>The time on the server is @DateTime.Now</h2>
+
+
+<form asp-controller="Users" asp-action="Register" method="post">
+    First Name:
+    <input asp-for="FirstName" />
+    Last Name:
+    <input asp-for="SecondName" />
+    Password:
+    <input asp-for="PasswordHash" />
+    <input type="submit" />
+</form>
+
+<form asp-controller="Users" asp-action="Authenticate" method="post">
+    First Name:
+    <input asp-for="FirstName" />
+    Password:
+    <input asp-for="Password" />
+    <input type="submit" />
+</form>

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SunflowersBookingSystem.Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SunflowersBookingSystem.Data", "SunflowersBookingSystem.Data\SunflowersBookingSystem.Data.csproj", "{C596999E-6CF7-4C46-AD2F-B64ECF64D1A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunflowersBookingSystem.Services", "SunflowersBookingSystem.Services\SunflowersBookingSystem.Services.csproj", "{BAB0F328-EBFB-4E12-B440-A22EBE25E7D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SunflowersBookingSystem.Services", "SunflowersBookingSystem.Services\SunflowersBookingSystem.Services.csproj", "{BAB0F328-EBFB-4E12-B440-A22EBE25E7D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

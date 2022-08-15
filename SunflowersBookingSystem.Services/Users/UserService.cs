@@ -8,6 +8,8 @@
     using SunflowersBookingSystem.Services.Users.Interfaces;
     using Microsoft.Extensions.Logging;
     using BCrypt.Net;
+    using Microsoft.AspNetCore.Http;
+    using System.Security.Claims;
 
     public class UserService : IUserService
     {
@@ -30,34 +32,38 @@
 
             // validate
             if (user == null || !BCrypt.Verify(model.Password, user.PasswordHash))
-            {
-                _logger.LogInformation(ServicesLogEvents.UsersOperation, $"{model.FirstName} authentication failed.");
-                throw new Exception("Username or password is incorrect");
-            }
+                throw new Exception($"{model.FirstName} Username or password is incorrect");
 
             // authentication successful
             var response = _mapper.Map<AuthenticateResponse>(user);
             response.Token = _jwtUtils.GenerateToken(user);
+
             return response;
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<User> GetAllUsers()
         {
-            throw new NotImplementedException();
+            var users = new List<User>();
+            users.AddRange(_context.Users.ToList());
+
+            return users;
         }
 
         public User GetById(int id)
         {
-            throw new NotImplementedException();
+            var user = _context.Users.FirstOrDefault(x=>x.Id == id);
+
+            return user;
         }
 
         public void Register(RegisterRequest model)
         {
+            _logger.LogInformation(ServicesLogEvents.UsersOperation, $"{model.FirstName} is trying to register.");
             // validate
             if (_context.Users.Any(x => x.FirstName == model.FirstName))
                 throw new Exception("Username '" + model.FirstName + "' is already taken");
@@ -71,6 +77,7 @@
             // save user
             _context.Users.Add(user);
             _context.SaveChanges();
+
         }
 
         //public void Update(int id, UpdateRequest model)
