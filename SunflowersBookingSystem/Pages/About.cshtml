@@ -1,0 +1,12 @@
+﻿@page
+@model SunflowersBookingSystem.Web.Pages.AboutModel
+
+@{
+    for(int i = 0; i<5; i++)
+    {
+        <p>
+            @Model.Message
+        </p>
+        Console.WriteLine(i);
+    }
+}
