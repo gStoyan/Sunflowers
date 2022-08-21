@@ -4,24 +4,14 @@
 @model RegisterViewModel
 @{  
     ViewData["Title"] = "Index";  
-} 
+}
 
-<div>
-<form asp-controller="Users" asp-action="Register" method="post">
-    First Name:
-    <input asp-for="FirstName" />
-    Last Name:
-    <input asp-for="SecondName" />
-    Password:
-    <input asp-for="PasswordHash" />
-    <input type="submit" />
-</form>
-
-<form asp-controller="Users" asp-action="Authenticate" method="post">
-    First Name:
-    <input asp-for="FirstName" />
-    Password:
-    <input asp-for="Password" />
-    <input type="submit" />
-</form>
+<div id="loginForm">
+    <form asp-controller="Users" asp-action="Authenticate" method="post">
+        First Name:
+        <input asp-for="FirstName" />
+        Password:
+        <input asp-for="Password" />
+        <input type="submit" />
+    </form>
 </div>

@@ -9,10 +9,6 @@ using SunflowersBookingSystem.Services.Users.Interfaces;
 using SunflowersBookingSystem.Web.Helpers;
 using Serilog.Events;
 using Newtonsoft.Json.Serialization;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.Net.Http.Headers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args); 
 // Configure Logger
@@ -27,12 +23,12 @@ var logger = new LoggerConfiguration()
 builder.Logging.AddSerilog(logger);
 
 // Add services to the container.
+builder.Services.AddDbContext<SunflowersDbContext>();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 builder.Services.AddRazorPages();
 builder.Services.AddMvc(options => options.EnableEndpointRouting = false)
 	.AddNewtonsoftJson(o => o.SerializerSettings.ContractResolver = new DefaultContractResolver());
-
-builder.Services.AddDbContext<SunflowersDbContext>();
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
