@@ -46,20 +46,7 @@
             </li>
           </ul>
         </div>
-      </div>
-    </div>
-    <div class="px-3 py-2 border-bottom mb-3">
-      <div class="container d-flex flex-wrap justify-content-center">
-        <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-        </form>
-
-        <div class="text-end">
-          <button type="button" class="btn btn-light text-dark me-2" onclick="showLoginForm()">Login</button>
-          <button type="button" class="btn btn-primary">Sign-up</button>
-        </div>
-      </div>
-    </div>
+      </div>    
   </header>
     <div class="container">  
         <main role="main" class="pb-3">  
@@ -75,8 +62,8 @@
   
     <script language="JavaScript" type="text/javascript" src="~/lib/jquery/jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/js/home.js" asp-append-version="true"></script>  
-  
+    <script language="JavaScript" type="text/javascript" src="~/js/home.js" asp-append-version="true"></script>
+    <script src="~/js/home.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)  
 </body>  
 </html>  
