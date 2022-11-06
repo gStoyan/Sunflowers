@@ -1,0 +1,15 @@
+﻿#intro-example {
+    height: 400px;
+}
+
+/* Height for devices larger than 992px */
+@media (min-width: 992px) {
+    #intro-example {
+        height: 600px;
+    }
+}
+
+body {
+    background-color: lightblue;
+    background-image: url('../images/sand.jpg');
+}
