@@ -1,4 +1,4 @@
-﻿namespace SunflowersBookingSystem.Services.Users
+﻿namespace SunflowersBookingSystem.Services.JwtMiddleware
 {
     using Microsoft.AspNetCore.Http;
     using SunflowersBookingSystem.Services.Users.Interfaces;

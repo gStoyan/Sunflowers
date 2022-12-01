@@ -1,12 +1,12 @@
 ﻿@page
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using SunflowersBookingSystem.Web.Models
-@model RegisterViewModel
+@using SunflowersBookingSystem.Services.Models
+@model AuthenticateRequestDto
 @{  
     ViewData["Title"] = "Index";  
 }
 
-<div id="intro-example" class="p-5 text-center bg-image">
+<div id="intro-example" class="p-5 text-center bg-image">    
     <div class="mask" style="background-color: rgba(0,0,0,0.5);">
         <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>asasdasdasd
 
 <div id="loginForm">
     <form asp-controller="Users" asp-action="Authenticate" method="post">
@@ -33,3 +33,5 @@
         <input type="submit" />
     </form>
 </div>
+
+

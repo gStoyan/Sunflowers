@@ -9,6 +9,7 @@
     using SunflowersBookingSystem.Services.Users.Interfaces;
     using SunflowersBookingSystem.Web.Attributes;
     using SunflowersBookingSystem.Web.Helpers;
+    using SunflowersBookingSystem.Web.Models;
     using System.Net.Http.Headers;
     using System.Security.Claims;
 
@@ -30,9 +31,10 @@
 
         [CustomAllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromForm] AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate([FromForm] AuthenticateViewModel model)
         {
-            var response = _userService.Authenticate(model);
+
+            var response = _userService.Authenticate(model.ConvertToDto());
             _logger.LogInformation(MyLogEvents.GetItem, $"{response.FirstName} authenticated");
             Response.Cookies.Append("Bearer", response.Token);
             Response.Cookies.Append("User", response.FirstName);

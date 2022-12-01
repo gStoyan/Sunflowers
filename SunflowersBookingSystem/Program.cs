@@ -9,6 +9,7 @@ using SunflowersBookingSystem.Services.Users.Interfaces;
 using SunflowersBookingSystem.Web.Helpers;
 using Serilog.Events;
 using Newtonsoft.Json.Serialization;
+using SunflowersBookingSystem.Services.JwtMiddleware;
 
 var builder = WebApplication.CreateBuilder(args); 
 // Configure Logger
@@ -16,8 +17,8 @@ var logger = new LoggerConfiguration()
    .ReadFrom.Configuration(builder.Configuration)
    .MinimumLevel.Debug()
    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-   .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-   .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
+   //.MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+   //.MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
    //.WriteTo.File(new CompactJsonFormatter(), "log.txt")
    .CreateLogger();
 builder.Logging.AddSerilog(logger);

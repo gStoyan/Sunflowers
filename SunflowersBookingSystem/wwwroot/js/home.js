@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "";
 });
 function showLoginForm() {    
     console.log(2);

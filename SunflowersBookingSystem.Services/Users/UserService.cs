@@ -26,7 +26,7 @@
             _logger = logger;
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest model)
+        public AuthenticateResponse Authenticate(AuthenticateRequestDto model)
         {
             var user = _context.Users.SingleOrDefault(x => x.FirstName == model.FirstName);
 

@@ -1,4 +1,4 @@
-﻿namespace SunflowersBookingSystem.Services.Users
+﻿namespace SunflowersBookingSystem.Services.JwtMiddleware
 {
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
@@ -36,7 +36,7 @@
 
         public int? ValidateToken(string token)
         {
-            if (token==null)
+            if (token == null)
             {
                 return null;
             }
