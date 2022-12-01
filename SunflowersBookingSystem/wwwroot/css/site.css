@@ -11,5 +11,23 @@
 
 body {
     background-color: lightblue;
-    background-image: url('../images/sand.jpg');
+    background-image: url('../images/background.jpg');
+    color: beige;
+}
+
+a {
+    color: beige;
+}
+
+a:visited {
+    color: silver;
+}
+
+a:hover, a:active, a:focus {
+    color: silver;
+}
+
+.form-control {
+    font-size: 20px;
+    width: 45%;
 }
