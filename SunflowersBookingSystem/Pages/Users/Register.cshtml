@@ -1,0 +1,47 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using SunflowersBookingSystem.Web.Models
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<!-- Pills content -->
+<div class="tab-content" style="margin-top:67px;">
+    <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+        <form asp-controller="Users" asp-action="Register" method="post">
+
+            <p class="text-center">Registration:</p>
+
+            <!-- Email input -->
+            <div style="margin-left:35%" class="form-outline mb-4 align-self-center">
+                <input required type="email" id="email" asp-for="Email" class="form-control" />
+                <label class="form-label" for="email">Email or username</label>
+            </div>
+
+            <!-- FirstName input -->
+            <div style="margin-left:35%" class="form-outline mb-4 align-self-center">
+                <input required type="text" id="firstName" asp-for="FirstName" class="form-control" />
+                <label class="form-label" for="loginName">First name</label>
+            </div>
+
+            <!-- SecondName input -->
+            <div style="margin-left:35%" class="form-outline mb-4 align-self-center">
+                <input required type="text" id="secondName" asp-for="SecondName" class="form-control" />
+                <label class="form-label" for="secondName">First name</label>
+            </div>
+
+            <!-- Password input -->
+            <div style="margin-left:35%" class="form-outline mb-4">
+                <input required type="password" id="loginPassword" asp-for="Password" class="form-control" />
+                <label class="form-label" for="loginPassword">Password</label>
+            </div>
+
+            <!-- Submit button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>           
+        </form>
+    </div>
+    <!-- Pills content -->
+    @{
+    }

@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using SunflowersBookingSystem.Data.Models;
-    using SunflowersBookingSystem.Services.Models;
+    using SunflowersBookingSystem.Services.Models.Users;
 
     public class AutoMapperProfile : Profile
     {
@@ -11,7 +11,7 @@
             CreateMap<User, AuthenticateResponse>()
                 .ForMember(dest => dest.Token, opt => opt.Ignore());
 
-            CreateMap<RegisterRequest, User>();
+            CreateMap<RegisterRequestDto, User>();
 
             //CreateMap<UpdateRequest, User>()
             //    .ForAllMembers(x => x.Condition(

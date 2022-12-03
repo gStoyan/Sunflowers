@@ -1,7 +1,7 @@
 ﻿namespace SunflowersBookingSystem.Web.Models
 {
     using System.ComponentModel.DataAnnotations;
-    using SunflowersBookingSystem.Services.Models;
+    using SunflowersBookingSystem.Services.Models.Users;
 
     public class AuthenticateViewModel
     {
@@ -14,13 +14,11 @@
         [Required]
         public string Password { get; set; }
 
-        public AuthenticateRequestDto ConvertToDto()
-        {
-            return new AuthenticateRequestDto
+        public AuthenticateRequestDto ConvertToDto() =>
+            new AuthenticateRequestDto
             {
                 FirstName = FirstName,
                 Password = Password,
             };
-        }
     }
 }

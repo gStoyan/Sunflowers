@@ -4,12 +4,12 @@
     using SunflowersBookingSystem.Data;
     using SunflowersBookingSystem.Data.Models;
     using SunflowersBookingSystem.Services.Helpers;
-    using SunflowersBookingSystem.Services.Models;
     using SunflowersBookingSystem.Services.Users.Interfaces;
     using Microsoft.Extensions.Logging;
     using BCrypt.Net;
     using Microsoft.AspNetCore.Http;
     using System.Security.Claims;
+    using SunflowersBookingSystem.Services.Models.Users;
 
     public class UserService : IUserService
     {
@@ -61,7 +61,7 @@
             return user;
         }
 
-        public void Register(RegisterRequest model)
+        public void Register(RegisterRequestDto model)
         {
             _logger.LogInformation(ServicesLogEvents.UsersOperation, $"{model.FirstName} is trying to register.");
             // validate

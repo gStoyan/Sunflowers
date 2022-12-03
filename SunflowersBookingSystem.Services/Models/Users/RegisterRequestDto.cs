@@ -1,8 +1,8 @@
-﻿namespace SunflowersBookingSystem.Services.Models
+﻿namespace SunflowersBookingSystem.Services.Models.Users
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class RegisterRequest
+    public class RegisterRequestDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

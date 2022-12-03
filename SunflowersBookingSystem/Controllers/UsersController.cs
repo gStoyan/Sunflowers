@@ -1,17 +1,12 @@
 ﻿namespace SunflowersBookingSystem.Web.Controllers
 {
-    using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using SunflowersBookingSystem.Services.Helpers;
-    using SunflowersBookingSystem.Services.Models;
     using SunflowersBookingSystem.Services.Users.Interfaces;
     using SunflowersBookingSystem.Web.Attributes;
     using SunflowersBookingSystem.Web.Helpers;
     using SunflowersBookingSystem.Web.Models;
-    using System.Net.Http.Headers;
-    using System.Security.Claims;
 
     [CustomAuthorize]
     [ApiController]
@@ -31,10 +26,10 @@
 
         [CustomAllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromForm] AuthenticateViewModel model)
+        public async Task<IActionResult> Authenticate([FromForm] AuthenticateViewModel authenticateModel)
         {
 
-            var response = _userService.Authenticate(model.ConvertToDto());
+            var response = _userService.Authenticate(authenticateModel.ConvertToDto());
             _logger.LogInformation(MyLogEvents.GetItem, $"{response.FirstName} authenticated");
             Response.Cookies.Append("Bearer", response.Token);
             Response.Cookies.Append("User", response.FirstName);
@@ -44,11 +39,11 @@
 
         [CustomAllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromForm] RegisterRequest model)
+        public IActionResult Register([FromForm] RegisterViewModel registerModel)
         {
-            _userService.Register(model);
+            _userService.Register(registerModel.ConvertToDto());
 
-            _logger.LogInformation(MyLogEvents.InsertItem, $"{model.FirstName} user registered.");
+            _logger.LogInformation(MyLogEvents.InsertItem, $"{registerModel.FirstName} user registered.");
             return new RedirectToPageResult("/About");
         }
 
