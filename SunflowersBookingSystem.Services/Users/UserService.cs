@@ -1,15 +1,13 @@
 ﻿namespace SunflowersBookingSystem.Services.Users
 {
     using AutoMapper;
+    using BCrypt.Net;
+    using Microsoft.Extensions.Logging;
     using SunflowersBookingSystem.Data;
     using SunflowersBookingSystem.Data.Models;
     using SunflowersBookingSystem.Services.Helpers;
-    using SunflowersBookingSystem.Services.Users.Interfaces;
-    using Microsoft.Extensions.Logging;
-    using BCrypt.Net;
-    using Microsoft.AspNetCore.Http;
-    using System.Security.Claims;
     using SunflowersBookingSystem.Services.Models.Users;
+    using SunflowersBookingSystem.Services.Users.Interfaces;
 
     public class UserService : IUserService
     {
@@ -22,17 +20,17 @@
         {
             _context = context;
             _jwtUtils = jwtUtils;
-            _mapper = mapper;   
+            _mapper = mapper;
             _logger = logger;
         }
 
         public AuthenticateResponse Authenticate(AuthenticateRequestDto model)
         {
-            var user = _context.Users.SingleOrDefault(x => x.FirstName == model.FirstName);
+            var user = _context.Users.SingleOrDefault(x => x.Email == model.Email);
 
             // validate
             if (user == null || !BCrypt.Verify(model.Password, user.PasswordHash))
-                throw new Exception($"{model.FirstName} Username or password is incorrect");
+                throw new Exception($"{model.Email} Username or password is incorrect");
 
             // authentication successful
             var response = _mapper.Map<AuthenticateResponse>(user);
@@ -56,7 +54,7 @@
 
         public User GetById(int id)
         {
-            var user = _context.Users.FirstOrDefault(x=>x.Id == id);
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
 
             return user;
         }

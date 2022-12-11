@@ -3,7 +3,6 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text.Json.Serialization;
-    using Microsoft.AspNetCore.Identity;
 
     public class User
     {
@@ -14,6 +13,11 @@
         [Required]
         public int Id { get; set; }
 
+        [Column("Email")]
+        [Required]
+        [MaxLength(50)]
+        [MinLength(1)]
+        public string Email { get; set; }
 
         [Column("FirstName")]
         [Required]

@@ -16,7 +16,7 @@
         {
         }
 
-        public DbSet<User> Users{ get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -36,8 +36,8 @@
                 .HasKey(u => u.Id);
             builder.Entity<User>()
                 .HasData(
-                new User { Id = 1, FirstName = "Stoyan",SecondName = "Grancharov"},
-                new User { Id = 2, FirstName = "Elisabeth", SecondName = "Ivanova"});
+                new User { Id = 1, Email = "my@email.com", FirstName = "Stoyan", SecondName = "Grancharov" },
+                new User { Id = 2, Email = "my@email.com", FirstName = "E", SecondName = "I" });
         }
     }
 }

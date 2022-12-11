@@ -4,7 +4,7 @@
 
 namespace SunflowersBookingSystem.Data.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class emailProperty : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,10 @@ namespace SunflowersBookingSystem.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SecondName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -23,13 +26,13 @@ namespace SunflowersBookingSystem.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "UserName" },
-                values: new object[] { 1, "Stoyan" });
+                columns: new[] { "Id", "Email", "FirstName", "PasswordHash", "SecondName" },
+                values: new object[] { 1, "my@email.com", "Stoyan", null, "Grancharov" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "UserName" },
-                values: new object[] { 2, "Elisabeth" });
+                columns: new[] { "Id", "Email", "FirstName", "PasswordHash", "SecondName" },
+                values: new object[] { 2, "my@email.com", "E", null, "I" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
