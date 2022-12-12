@@ -31,8 +31,10 @@
 
             var response = _userService.Authenticate(authenticateModel.ConvertToDto());
             _logger.LogInformation(MyLogEvents.GetItem, $"{response.Email} authenticated");
+
             Response.Cookies.Append("Bearer", response.Token);
             Response.Cookies.Append("User", response.Email);
+
             return new RedirectToPageResult("/Users/Profile");
 
         }
