@@ -24,7 +24,7 @@
             _logger = logger;
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequestDto model)
+        public UserDto Authenticate(AuthenticateRequestDto model)
         {
             var user = _context.Users.SingleOrDefault(x => x.Email == model.Email);
 
@@ -33,7 +33,7 @@
                 throw new Exception($"{model.Email} Username or password is incorrect");
 
             // authentication successful
-            var response = _mapper.Map<AuthenticateResponse>(user);
+            var response = _mapper.Map<UserDto>(user);
             response.Token = _jwtUtils.GenerateToken(user);
 
             return response;

@@ -31,7 +31,20 @@
         [MinLength(1)]
         public string SecondName { get; set; }
 
+        [Column("Phone")]
+        [MaxLength(15)]
+        [MinLength(1)]
+        public string Phone { get; set; }
+
+        [Column("Country")]
+        [MaxLength(25)]
+        [MinLength(1)]
+        public string Country { get; set; }
+
         [JsonIgnore]
         public string PasswordHash { get; set; }
+
+        [Column("Reservations")]
+        public List<Reservation> Reservations { get; set; } = new List<Reservation>();
     }
 }

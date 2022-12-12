@@ -17,13 +17,19 @@ namespace SunflowersBookingSystem.Web.Models
         [Required]
         public string Password { get; set; }
 
+        public string? Phone { get; set; }
+
+        public string? Country { get; set; }
+
         public RegisterRequestDto ConvertToDto() =>
             new RegisterRequestDto()
             {
                 Email = Email,
                 FirstName = FirstName,
                 SecondName = SecondName,
-                PasswordHash = Password
+                PasswordHash = Password,
+                Phone = Phone,
+                Country = Country
             };
     }
 }

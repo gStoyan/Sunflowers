@@ -8,7 +8,7 @@ namespace SunflowersBookingSystem.Web.Models
 
         public void OnGet()
         {
-            Message += $" Server time is { DateTime.Now }";
+            Message += $" Server time is {DateTime.Now}";
         }
     }
 }

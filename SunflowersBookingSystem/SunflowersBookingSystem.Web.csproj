@@ -34,4 +34,8 @@
     <ProjectReference Include="..\SunflowersBookingSystem.Services\SunflowersBookingSystem.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>

@@ -2,16 +2,21 @@
 {
     using AutoMapper;
     using SunflowersBookingSystem.Data.Models;
+    using SunflowersBookingSystem.Services.Models;
     using SunflowersBookingSystem.Services.Models.Users;
 
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, AuthenticateResponse>()
+            CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Token, opt => opt.Ignore());
 
-            CreateMap<RegisterRequestDto, User>();
+            CreateMap<Reservation, ReservationDto>();
+
+
+            CreateMap<RegisterRequestDto, User>()
+                .ForMember(dest => dest.Reservations, opt => opt.Ignore()); ;
 
             //CreateMap<UpdateRequest, User>()
             //    .ForAllMembers(x => x.Condition(

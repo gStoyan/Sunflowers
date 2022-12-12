@@ -6,10 +6,10 @@ using SunflowersBookingSystem.Services.Helpers;
 using SunflowersBookingSystem.Services.Mapping;
 using SunflowersBookingSystem.Services.Users;
 using SunflowersBookingSystem.Services.Users.Interfaces;
-using SunflowersBookingSystem.Web.Helpers;
 using Serilog.Events;
 using Newtonsoft.Json.Serialization;
 using SunflowersBookingSystem.Services.JwtMiddleware;
+using SunflowersBookingSystem.Web.Utilities;
 
 var builder = WebApplication.CreateBuilder(args); 
 // Configure Logger

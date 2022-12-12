@@ -1,4 +1,4 @@
-﻿namespace SunflowersBookingSystem.Web.Helpers
+﻿namespace SunflowersBookingSystem.Web.Utilities
 {
     public class MyLogEvents
     {

@@ -5,8 +5,8 @@
     using SunflowersBookingSystem.Services.Helpers;
     using SunflowersBookingSystem.Services.Users.Interfaces;
     using SunflowersBookingSystem.Web.Attributes;
-    using SunflowersBookingSystem.Web.Helpers;
     using SunflowersBookingSystem.Web.Models;
+    using SunflowersBookingSystem.Web.Utilities;
 
     [CustomAuthorize]
     [ApiController]
@@ -35,7 +35,7 @@
             Response.Cookies.Append("Bearer", response.Token);
             Response.Cookies.Append("User", response.Email);
 
-            return new RedirectToPageResult("/Users/Profile");
+            return new RedirectToPageResult("/Users/Profile", response);
 
         }
 

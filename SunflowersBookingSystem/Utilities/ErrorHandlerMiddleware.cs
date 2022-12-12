@@ -1,4 +1,4 @@
-﻿namespace SunflowersBookingSystem.Web.Helpers
+﻿namespace SunflowersBookingSystem.Web.Utilities
 {
     using Microsoft.AspNetCore.Http;
     using Newtonsoft.Json;
@@ -14,7 +14,7 @@
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
 
-        public ErrorHandlerMiddleware(RequestDelegate next,ILogger<ErrorHandlerMiddleware> logger )
+        public ErrorHandlerMiddleware(RequestDelegate next, ILogger<ErrorHandlerMiddleware> logger)
         {
             _next = next;
             _logger = logger;
