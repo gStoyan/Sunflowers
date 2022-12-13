@@ -1,34 +1,31 @@
 ﻿@page
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model SunflowersBookingSystem.Web.Pages.Users.ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+
+
 @*@{
     <a asp-controller="Users"
    asp-action="LogOut">LogOut</a>
 <a class="btn btn-primary btn-lg" href="https://localhost:7173/api/v/Users/GetAll" role="button">GetAll</a>
 }*@<div class="container emp-profile">
-    <form method="post">
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
-                    <div class="file btn btn-lg btn-primary">
-                        Change Photo
-                        <input type="file" name="file" />
-                    </div>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />                    
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
-                    <h5>
+                    <h4>
                         @Model.LoggedUser.FirstName @Model.LoggedUser.SecondName
-                    </h5>
-                    <h6>
-                        TODO
-                    </h6>
-                    <p class="proile-rating">TODO : <span>8/10</span></p>
+                    </h4>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Personal Info</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Orders TODO</button>
@@ -65,66 +62,72 @@
                                     <label>Phone</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>TODO</p>
+                                    <p>
+                                    @if (@String.IsNullOrEmpty(Model.LoggedUser.Phone))
+                                    {
+                                        <br/>
+                                    } else {
+                                        @Model.LoggedUser.Phone
+                                    }
+                                    </p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>TODO</label>
+                                    <label>Country</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>TODO</p>
+                                    <p>
+                                    @if (@String.IsNullOrEmpty(Model.LoggedUser.Country))
+                                    {
+                                        <br />
+                                    }
+                                    else
+                                    {
+                                        @Model.LoggedUser.Country
+                                    }
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>TODO</label>
+                            @if (!Model.LoggedUser.Reservations.Any())
+                            {
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Reservations</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>You have not made any reservations yet. You can make one now in the <a style="font-size: 25px" href="#callendar">callendar</a></p>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <p>TODO</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>TODO</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>TODO</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>TODO</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>TODO</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>TODO</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>TODO</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>TODO</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>TODO</p>
-                                </div>
-                            </div>
+                            }  
+                            
+                            else 
+                            {
+                                foreach (var reservation in Model.LoggedUser.Reservations)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Reservation</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>From @reservation.StartDate untill @reservation.EndDate</p>
+                                        </div>
+                                    </div>
+                                }                                
+                            }
+                            
                         </div>
                     </div>
                 </div>
-            </div>
             <div class="col-md-2">
-                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
+                </br>
+                <a class="btn btn-primary btn-block" asp-controller="Users" asp-action="Update" asp-route-id="@Model.LoggedUser.Id">
+                    Edit
+                </a>
             </div>
-        </div>        
-    </form>
+            </div>
+            
+        </div>
 </div>

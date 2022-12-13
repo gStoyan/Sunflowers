@@ -6,9 +6,8 @@ namespace SunflowersBookingSystem.Web.Pages.Users
     public class ProfileModel : PageModel
     {
 
-        public void OnGet(User user)
+        public void OnGet()
         {
-            this.LoggedUser = user;
         }
 
         public User LoggedUser { get; set; }

@@ -34,8 +34,11 @@
 
             Response.Cookies.Append("Bearer", response.Token);
             Response.Cookies.Append("User", response.Email);
+            response.Token = null;
 
-            return new RedirectToPageResult("/Users/Profile", response);
+
+
+            //return new RedirectToPageResult("/Users/Profile", response);
 
         }
 
@@ -47,6 +50,17 @@
 
             _logger.LogInformation(MyLogEvents.InsertItem, $"{registerModel.FirstName} user registered.");
             return new RedirectToPageResult("/About");
+        }
+
+
+        [HttpGet("update")]
+        public IActionResult Update(int id)
+        {
+            Console.WriteLine(id);
+            //_userService.Register(registerModel.ConvertToDto());
+
+            //_logger.LogInformation(MyLogEvents.InsertItem, $"{registerModel.FirstName} user registered.");
+            return new RedirectToPageResult("/Users/EditProfile");
         }
 
         [HttpGet("GetAll")]

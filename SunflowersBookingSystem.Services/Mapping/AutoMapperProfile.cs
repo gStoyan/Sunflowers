@@ -16,7 +16,8 @@
 
 
             CreateMap<RegisterRequestDto, User>()
-                .ForMember(dest => dest.Reservations, opt => opt.Ignore()); ;
+                .ForMember(dest => dest.Reservations, opt => opt.Ignore())
+                .ForMember(dest => dest.ProfilePicture, opt => opt.Ignore());
 
             //CreateMap<UpdateRequest, User>()
             //    .ForAllMembers(x => x.Condition(

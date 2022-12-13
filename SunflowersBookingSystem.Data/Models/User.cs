@@ -41,6 +41,12 @@
         [MinLength(1)]
         public string Country { get; set; }
 
+
+        [Column("ProfilePicture")]
+        [MaxLength(240)]
+        [MinLength(1)]
+        public string ProfilePicture { get; set; }
+
         [JsonIgnore]
         public string PasswordHash { get; set; }
 

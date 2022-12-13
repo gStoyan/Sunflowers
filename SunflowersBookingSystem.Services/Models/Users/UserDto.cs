@@ -9,6 +9,7 @@
         public string Token { get; set; }
         public string? Phone { get; set; }
         public string? Country { get; set; }
+        public string? ProfilePicture { get; set; }
         public List<ReservationDto> Reservations { get; set; } = new List<ReservationDto>();
 
     }
