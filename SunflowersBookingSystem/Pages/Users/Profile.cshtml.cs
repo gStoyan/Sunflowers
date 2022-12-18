@@ -1,15 +1,16 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SunflowersBookingSystem.Data.Models;
+using SunflowersBookingSystem.Services.Models.Users;
 
 namespace SunflowersBookingSystem.Web.Pages.Users
 {
     public class ProfileModel : PageModel
     {
 
-        public void OnGet()
+        public void OnGet(UserDto user)
         {
+            this.LoggedUser = user;
         }
 
-        public User LoggedUser { get; set; }
+        public UserDto LoggedUser { get; set; }
     }
 }

@@ -36,9 +36,7 @@
             Response.Cookies.Append("User", response.Email);
             response.Token = null;
 
-
-
-            //return new RedirectToPageResult("/Users/Profile", response);
+            return new RedirectToPageResult("/Users/Profile", response);
 
         }
 
@@ -54,9 +52,9 @@
 
 
         [HttpGet("update")]
-        public IActionResult Update(int id)
+        public IActionResult Update(EditProfileViewModel model)
         {
-            Console.WriteLine(id);
+            Console.WriteLine(model);
             //_userService.Register(registerModel.ConvertToDto());
 
             //_logger.LogInformation(MyLogEvents.InsertItem, $"{registerModel.FirstName} user registered.");
