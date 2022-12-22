@@ -4,8 +4,9 @@
 @{
 }
 <div class="tab-content" style="margin-top:67px;">
+
     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-        <form asp-controller="Users" asp-action="Register" method="post">
+        <form asp-controller="Users" asp-action="UpdatePost" method="post" enctype="multipart/form-data">
 
             <p class="text-center">Edit Profile:</p>
 
@@ -27,19 +28,28 @@
                 <label class="form-label" for="secondName">First name</label>
             </div>
 
-            <!-- Password input -->
-            <div style="margin-left:35%" class="form-outline mb-4">
-                <input required type="password" id="loginPassword" asp-for="Password" class="form-control" />
-                <label class="form-label" for="loginPassword">Password</label>
+            <!-- Country input -->
+            <div style="margin-left:35%" class="form-outline mb-4 align-self-center">
+                <input type="text" id="country" asp-for="Country" class="form-control" />
+                <label class="form-label" for="country">Country</label>
             </div>
-            
+
+            <!-- Phone input -->
+            <div style="margin-left:35%" class="form-outline mb-4 align-self-center">
+                <input type="text" id="phone" asp-for="Phone" class="form-control" />
+                <label class="form-label" for="phone">Phone</label>
+            </div>
+                        
             <!-- Picture input -->
+
             <div style="margin-left:35%" class="form-outline mb-4">
                 <label class="form-label" for="profilePicture">Profile Picture</label>
                 <h6>Upload a different photo...</h6>
-                <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
-                <input required type="password" id="profilePicture" asp-for="Password" class="form-control" type="file" class="form-control" />
+                <img class="profile-picture" src="~/images/profileDefault.png">
+                <input id="profilePicture" asp-for="ProfilePicture"/>
             </div>
+
+            <input class="hiding" type="hidden" asp-for="Id" value="@HttpContext.User.Claims.FirstOrDefault().Value" />
 
             <!-- Submit button -->
             <div class="text-center">

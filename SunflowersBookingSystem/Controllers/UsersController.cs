@@ -52,7 +52,17 @@
 
 
         [HttpGet("update")]
-        public IActionResult Update(EditProfileViewModel model)
+        public IActionResult Update(string id)
+        {
+            Console.WriteLine(id);
+            //_userService.Register(registerModel.ConvertToDto());
+
+            //_logger.LogInformation(MyLogEvents.InsertItem, $"{registerModel.FirstName} user registered.");
+            return new RedirectToPageResult("/Users/EditProfile");
+        }
+
+        [HttpPost("UpdatePost")]
+        public IActionResult UpdatePost([FromForm] EditProfileViewModel model)
         {
             Console.WriteLine(model);
             //_userService.Register(registerModel.ConvertToDto());
@@ -60,6 +70,7 @@
             //_logger.LogInformation(MyLogEvents.InsertItem, $"{registerModel.FirstName} user registered.");
             return new RedirectToPageResult("/Users/EditProfile");
         }
+
 
         [HttpGet("GetAll")]
         public IActionResult GetAllUsers()

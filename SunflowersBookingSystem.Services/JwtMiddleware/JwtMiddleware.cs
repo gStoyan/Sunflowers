@@ -21,7 +21,7 @@
             if (userId != null)
             {
                 // attach user to context on successful jwt validation
-
+                context.Items["User"] = userService.GetById(userId.Value);
                 var userData = userService.GetById(userId.Value);
                 var identity = new ClaimsIdentity(new List<Claim>
                 {

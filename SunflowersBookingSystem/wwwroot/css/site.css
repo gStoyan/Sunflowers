@@ -46,3 +46,6 @@ a:hover, a:active, a:focus {
     color: #6c757d;
     cursor: pointer;
 }
+.profile-picture{
+    height: 100px;
+}
