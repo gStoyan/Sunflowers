@@ -1,8 +1,9 @@
 ﻿@page
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model SunflowersBookingSystem.Web.Models.EditProfileViewModel
+@model SunflowersBookingSystem.Web.Models.UpdateProfileViewModel
 @{
 }
+
 <div class="tab-content" style="margin-top:67px;">
 
     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
@@ -12,7 +13,8 @@
 
             <!-- Email input -->
             <div style="margin-left:35%" class="form-outline mb-4 align-self-center">
-                <input required type="email" id="email" asp-for="Email" class="form-control" />
+                <input required type="email" id="email" asp-for="Email" class="form-control" 
+                value="@HttpContext.User.Identities.First().Claims.First(c=>c.Type == "Email").Value" />
                 <label class="form-label" for="email">Email or username</label>
             </div>
 
@@ -25,7 +27,7 @@
             <!-- SecondName input -->
             <div style="margin-left:35%" class="form-outline mb-4 align-self-center">
                 <input required type="text" id="secondName" asp-for="SecondName" class="form-control" />
-                <label class="form-label" for="secondName">First name</label>
+                <label class="form-label" for="secondName">Second name</label>
             </div>
 
             <!-- Country input -->

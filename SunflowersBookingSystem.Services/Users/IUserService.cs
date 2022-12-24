@@ -1,4 +1,4 @@
-﻿namespace SunflowersBookingSystem.Services.Users.Interfaces
+﻿namespace SunflowersBookingSystem.Services.Users
 {
     using SunflowersBookingSystem.Data.Models;
     using SunflowersBookingSystem.Services.Models.Users;
@@ -9,7 +9,7 @@
         IEnumerable<User> GetAllUsers();
         User GetById(int id);
         void Register(RegisterRequestDto model);
-        //void Update(int id, UpdateRequest model);
+        Task<UserDto> UpdateAsync(UpdateProfileDto updatePorfileDto);
         void Delete(int id);
     }
 }

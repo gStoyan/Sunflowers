@@ -3,6 +3,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
+    using SunflowersBookingSystem.Services.Users;
     using SunflowersBookingSystem.Services.Users.Interfaces;
     public class JwtMiddleware
     {
@@ -26,6 +27,7 @@
                 var identity = new ClaimsIdentity(new List<Claim>
                 {
                     new Claim("UserId", userData.Id.ToString(), ClaimValueTypes.Integer32),
+                    new Claim("Email", userData.Email, ClaimValueTypes.Integer32),
                     new Claim(ClaimTypes.Role, "user")
                 }, "Custom");
                 context.User = new ClaimsPrincipal(identity);

@@ -4,8 +4,6 @@
 @{
     ViewData["Title"] = "Profile";
 }
-
-
 @*@{
     <a asp-controller="Users"
    asp-action="LogOut">LogOut</a>
@@ -18,7 +16,7 @@
                     {
                     <img class="profile-picture" src="~/images/profileDefault.png"/>
                     } else {
-                    <img class="profile-picture" src="@Model.LoggedUser.ProfilePicture" />
+                    <img class="profile-picture" src="~/images/@Model.LoggedUser.ProfilePicture" />
                     }
                 </div>
             </div>

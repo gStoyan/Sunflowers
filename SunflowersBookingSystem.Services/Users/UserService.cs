@@ -78,9 +78,22 @@
 
         }
 
-        //public void Update(int id, UpdateRequest model)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<UserDto> UpdateAsync(UpdateProfileDto updatePorfileDto)
+        {
+            var user = GetById(int.Parse(updatePorfileDto.Id));
+
+            user.Email = updatePorfileDto.Email;
+            user.ProfilePicture = updatePorfileDto.ProfilePicture;
+            user.Country = updatePorfileDto.Country;
+            user.Phone = updatePorfileDto.Phone;
+            user.FirstName = updatePorfileDto.FirstName;
+            user.SecondName = updatePorfileDto.SecondName;
+
+            await _context.SaveChangesAsync();
+
+            var response = _mapper.Map<UserDto>(user);
+
+            return response;
+        }
     }
 }

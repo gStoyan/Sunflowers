@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using SunflowersBookingSystem.Services.Helpers;
-    using SunflowersBookingSystem.Services.Users.Interfaces;
+    using SunflowersBookingSystem.Services.Users;
     using SunflowersBookingSystem.Web.Attributes;
     using SunflowersBookingSystem.Web.Models;
     using SunflowersBookingSystem.Web.Utilities;
@@ -16,12 +16,14 @@
         private IUserService _userService;
         private readonly AppSettings _appSettings;
         private readonly ILogger _logger;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public UsersController(IUserService userService, IOptions<AppSettings> appSettings, ILogger<UsersController> logger)
+        public UsersController(IUserService userService, IOptions<AppSettings> appSettings, ILogger<UsersController> logger, IWebHostEnvironment hostingEnvironment)
         {
             _userService = userService;
             _appSettings = appSettings.Value;
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [CustomAllowAnonymous]
@@ -52,23 +54,20 @@
 
 
         [HttpGet("update")]
-        public IActionResult Update(string id)
-        {
-            Console.WriteLine(id);
-            //_userService.Register(registerModel.ConvertToDto());
-
-            //_logger.LogInformation(MyLogEvents.InsertItem, $"{registerModel.FirstName} user registered.");
-            return new RedirectToPageResult("/Users/EditProfile");
-        }
+        public IActionResult Update(string id) => new RedirectToPageResult("/Users/EditProfile");
 
         [HttpPost("UpdatePost")]
-        public IActionResult UpdatePost([FromForm] EditProfileViewModel model)
+        public async Task<IActionResult> UpdatePost([FromForm] UpdateProfileViewModel model)
         {
-            Console.WriteLine(model);
-            //_userService.Register(registerModel.ConvertToDto());
+            var path = Path.Combine(_hostingEnvironment.WebRootPath, "images/", model.ProfilePicture.FileName);
+            using (FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                await model.ProfilePicture.CopyToAsync(stream);
+                stream.Close();
+            }
 
-            //_logger.LogInformation(MyLogEvents.InsertItem, $"{registerModel.FirstName} user registered.");
-            return new RedirectToPageResult("/Users/EditProfile");
+            var response = await _userService.UpdateAsync(model.ConvertToDto());
+            return new RedirectToPageResult("/Users/Profile", response);
         }
 
 
