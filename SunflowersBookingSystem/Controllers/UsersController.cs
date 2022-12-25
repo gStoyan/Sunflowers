@@ -67,6 +67,7 @@
             }
 
             var response = await _userService.UpdateAsync(model.ConvertToDto());
+            _logger.LogInformation(MyLogEvents.UpdateItem, $"{response.FirstName} updated his profile data.");
             return new RedirectToPageResult("/Users/Profile", response);
         }
 

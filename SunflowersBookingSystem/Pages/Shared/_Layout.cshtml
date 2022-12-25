@@ -28,7 +28,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li id="navCallender">
-                        <a href="#" class="nav-link text-white">
+                        <a asp-controller="Calendar" asp-action="GetAll" class="nav-link text-white">
                             <i class="bi bi-calendar-check mx-auto mb-1" width="24" height="24"></i>
                             Callender
                         </a>
