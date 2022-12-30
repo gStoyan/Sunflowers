@@ -1,22 +1,22 @@
 using AutoMapper;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using Serilog;
 using SunflowersBookingSystem.Data;
 using SunflowersBookingSystem.Services.Helpers;
+using SunflowersBookingSystem.Services.JwtMiddleware;
 using SunflowersBookingSystem.Services.Mapping;
+using SunflowersBookingSystem.Services.Reservations;
 using SunflowersBookingSystem.Services.Users;
 using SunflowersBookingSystem.Services.Users.Interfaces;
-using Serilog.Events;
-using Newtonsoft.Json.Serialization;
-using SunflowersBookingSystem.Services.JwtMiddleware;
 using SunflowersBookingSystem.Web.Utilities;
 
-var builder = WebApplication.CreateBuilder(args); 
+var builder = WebApplication.CreateBuilder(args);
 // Configure Logger
 var logger = new LoggerConfiguration()
    .ReadFrom.Configuration(builder.Configuration)
    .MinimumLevel.Debug()
-   .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+   //.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
    //.MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
    //.MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
    //.WriteTo.File(new CompactJsonFormatter(), "log.txt")
@@ -34,7 +34,8 @@ builder.Services.AddMvc(options => options.EnableEndpointRouting = false)
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSwaggerGen(c => {
+builder.Services.AddSwaggerGen(c =>
+{
 	c.SwaggerDoc("v1", new OpenApiInfo
 	{
 		Title = "JWTToken_Auth_API"
@@ -65,11 +66,13 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IReservationServices, ReservationServices>();
 builder.Services.AddSingleton(ConfigureMapperService());
 
 static IMapper ConfigureMapperService()
 {
-	var mapperServiceConfigureation = new MapperConfiguration(cfg => {
+	var mapperServiceConfigureation = new MapperConfiguration(cfg =>
+	{
 		cfg.AddProfile<AutoMapperProfile>();
 	});
 

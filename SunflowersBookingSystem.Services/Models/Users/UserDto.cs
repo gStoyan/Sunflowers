@@ -1,4 +1,6 @@
-﻿namespace SunflowersBookingSystem.Services.Models.Users
+﻿using SunflowersBookingSystem.Services.Models.Reservations;
+
+namespace SunflowersBookingSystem.Services.Models.Users
 {
     public class UserDto
     {

@@ -1,4 +1,4 @@
-﻿namespace SunflowersBookingSystem.Services.Models
+﻿namespace SunflowersBookingSystem.Services.Models.Reservations
 {
     using System;
     using SunflowersBookingSystem.Services.Models.Users;

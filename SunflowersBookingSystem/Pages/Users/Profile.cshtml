@@ -100,8 +100,9 @@
                                         <label>Reservations</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>You have not made any reservations yet. You can make one now in the 
-                                            <a style="font-size: 25px" asp-controller="Calendar" asp-action="GetAll">callendar</a></p>
+                                        <p>You have not made any reservations yet. You can make one now in the
+                                        <a style="font-size: 25px" asp-controller="Calendar" asp-action="Index" asp-route-month="@DateTime.Now.Month">callendar</a>
+                                    </p>
                                     </div>
                                 </div>
                             }  

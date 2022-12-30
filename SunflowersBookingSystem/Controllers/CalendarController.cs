@@ -1,7 +1,9 @@
 ﻿namespace SunflowersBookingSystem.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using SunflowersBookingSystem.Services.Reservations;
     using SunflowersBookingSystem.Web.Attributes;
+    using SunflowersBookingSystem.Web.Pages.Calendar;
     using SunflowersBookingSystem.Web.Utilities;
 
     [CustomAuthorize]
@@ -9,11 +11,26 @@
     [Route("api/v/[controller]")]
     public class CalendarController : Controller
     {
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        private ILogger _logger;
+        private IReservationServices _reservationServices;
+
+        public CalendarController(ILogger<CalendarController> logger, IReservationServices reservationServices)
         {
-            //_logger.LogInformation(MyLogEvents.GetItem, "Get all users.");
-            return new RedirectToPageResult("/Calendar/Index");
+            _logger = logger;
+            _reservationServices = reservationServices;
+        }
+        [HttpGet("Index")]
+        public IActionResult Index(int month)
+        {
+            _logger.LogInformation(MyLogEvents.GetItem,
+                $"User with Id: {HttpContext.User.Identities.First().Claims.First(c => c.Type == "UserId").Value} accessed calendar page");
+            return new RedirectToPageResult("/Calendar/Index", month);
+        }
+
+        [HttpPost("CreateReservation")]
+        public async Task<IActionResult> CreateReservation(CalendarModel model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

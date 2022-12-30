@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using SunflowersBookingSystem.Data.Models;
-    using SunflowersBookingSystem.Services.Models;
+    using SunflowersBookingSystem.Services.Models.Reservations;
     using SunflowersBookingSystem.Services.Models.Users;
 
     public class AutoMapperProfile : Profile

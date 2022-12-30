@@ -1,8 +1,10 @@
 ﻿namespace SunflowersBookingSystem.Web.Controllers
 {
+    using AutoMapper;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using SunflowersBookingSystem.Services.Helpers;
+    using SunflowersBookingSystem.Services.Models.Users;
     using SunflowersBookingSystem.Services.Users;
     using SunflowersBookingSystem.Web.Attributes;
     using SunflowersBookingSystem.Web.Models;
@@ -17,13 +19,15 @@
         private readonly AppSettings _appSettings;
         private readonly ILogger _logger;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserService userService, IOptions<AppSettings> appSettings, ILogger<UsersController> logger, IWebHostEnvironment hostingEnvironment)
+        public UsersController(IUserService userService, IOptions<AppSettings> appSettings, ILogger<UsersController> logger, IWebHostEnvironment hostingEnvironment, IMapper mapper)
         {
             _userService = userService;
             _appSettings = appSettings.Value;
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
+            _mapper = mapper;
         }
 
         [CustomAllowAnonymous]
@@ -39,7 +43,14 @@
             response.Token = null;
 
             return new RedirectToPageResult("/Users/Profile", response);
+        }
 
+        [HttpGet]
+        public IActionResult Profile(int id)
+        {
+            var user = _userService.GetById(id);
+            var userDto = _mapper.Map<UserDto>(user);
+            return new RedirectToPageResult("/Users/Profile", userDto);
         }
 
         [CustomAllowAnonymous]

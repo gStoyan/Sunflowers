@@ -2,7 +2,6 @@
 @using SunflowersBookingSystem.Services.Models.Users
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using SunflowersBookingSystem.Services.Models;
-@using SunflowersBookingSystem.Services.Models.Users;
 @model AuthenticateRequestDto
 @{  
     ViewData["Title"] = "Index";  
@@ -16,11 +15,20 @@
                 <h5 class="mb-4">
                     Best place to relax
                 </h5>
-                <a class="btn btn-outline-light btn-lg m-2" asp-page="/Users/Login"
-                   role="button" rel="nofollow" >Login</a>
+                @if(!User.Identity.IsAuthenticated){
+                    <a class="btn btn-outline-light btn-lg m-2" asp-page="/Users/Login"
+                       role="button" rel="nofollow" >Login</a>
+                }
 
-                <a class="btn btn-outline-light btn-lg m-2" href="#"
-                   role="button">Make a reservation</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-outline-light btn-lg m-2"
+                   role="button" rel="nofollow" asp-controller="Users" asp-action="LogOut">Log out</a>
+                    <a class="btn btn-outline-light btn-lg m-2" asp-controller="Users" asp-action="Profile"
+                   asp-route-id="@int.Parse(HttpContext.User.Identities.First().Claims.First(c=>c.Type == "UserId").Value)" asp-va role="button">Profile</a>
+                    <a class="btn btn-outline-light btn-lg m-2" href="#"
+                        role="button">Make a reservation</a>
+                }
             </div>
         </div>
     </div>

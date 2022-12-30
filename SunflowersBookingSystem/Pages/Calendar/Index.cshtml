@@ -1,4 +1,67 @@
 ﻿@page
-@model SunflowersBookingSystem.Web.Pages.Calendar.IndexModel
+@using System.Globalization
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model SunflowersBookingSystem.Web.Pages.Calendar.CalendarModel
 @{
 }
+<h2>Please click on the date you want to make your reservation!</h2>
+<div class="container">
+
+    <div id="collapse" class="show">
+        <form>
+            <input id="comment" asp-for="Comment" />
+        </form>
+    </div>
+    @for (int i = 1; i < 13; i++)
+    {
+        <a asp-controller="Calendar" asp-action="" asp-rout-month="@i">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i)</a>
+    }
+    <div class="row">
+        @for (int i = 0; i < Model.Days.Count && i < 10; i++)
+        {
+            <div class="col-md-2 col-xl-1" onclick="toggle()">
+                <div class="card bg-c-blue order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">@Model.Days[i].State.ReservedRooms</h6>
+                        <h3 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>@Model.Days[i].Date</span></h3>
+                    </div>
+                </div>
+            </div>
+         }
+       
+    </div>
+    <div class="row">
+        @for (int i = 10; i < Model.Days.Count && i < 20; i++)
+        {
+            <div class="col-md-2 col-xl-1">
+                <div class="card bg-c-blue order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">@Model.Days[i].Date</h6>
+                        <h3 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>486</span></h3>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="row">
+        @for (int i = 20; i < Model.Days.Count; i++)
+        {
+            <div class="col-md-2 col-xl-1">
+                <div class="card bg-c-blue order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">@Model.Days[i].Date</h6>
+                        <h3 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>486</span></h3>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        toggle()
+    });
+</script>
