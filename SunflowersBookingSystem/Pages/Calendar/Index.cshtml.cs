@@ -1,15 +1,14 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using SunflowersBookingSystem.Services.Extensions;
-using SunflowersBookingSystem.Services.Reservations;
-using SunflowersBookingSystem.Web.Models.Calendar;
-
 namespace SunflowersBookingSystem.Web.Pages.Calendar
 {
-    public class CalendarModel : PageModel
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using SunflowersBookingSystem.Services.Extensions;
+    using SunflowersBookingSystem.Services.Reservations;
+    using SunflowersBookingSystem.Web.Models.Calendar;
+    public class IndexModel : PageModel
     {
         private IReservationServices _reservationServices;
 
-        public CalendarModel(IReservationServices reservationServices)
+        public IndexModel(IReservationServices reservationServices)
         {
             _reservationServices = reservationServices;
         }
