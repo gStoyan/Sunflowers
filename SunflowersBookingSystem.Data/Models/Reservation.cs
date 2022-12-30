@@ -10,12 +10,6 @@
         [Required]
         public int Id { get; set; }
 
-        [Column("Email")]
-        [Required]
-        [MaxLength()]
-        [MinLength(1)]
-        public int Room { get; set; }
-
         [Column("Start Date")]
         [Required]
         public DateTime StartDate { get; set; }
@@ -32,6 +26,10 @@
         [Column("Comment")]
         [MaxLength(245)]
         public string Comment { get; set; }
+
+        public Room Room { get; set; }
+
+        public int RoomId { get; set; }
 
         public int UserId { get; set; }
 

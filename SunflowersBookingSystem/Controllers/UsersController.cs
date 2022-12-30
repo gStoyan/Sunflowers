@@ -38,19 +38,11 @@
             var response = _userService.Authenticate(authenticateModel.ConvertToDto());
             _logger.LogInformation(MyLogEvents.GetItem, $"{response.Email} authenticated");
 
-            Response.Cookies.Append("Bearer", response.Token);
-            Response.Cookies.Append("User", response.Email);
+            Response.Cookies.Append("Bearer", response.Token, new CookieOptions { MaxAge = TimeSpan.FromDays(1) });
+            Response.Cookies.Append("User", response.Email, new CookieOptions { MaxAge = TimeSpan.FromDays(1) });
             response.Token = null;
 
             return new RedirectToPageResult("/Users/Profile", response);
-        }
-
-        [HttpGet]
-        public IActionResult Profile(int id)
-        {
-            var user = _userService.GetById(id);
-            var userDto = _mapper.Map<UserDto>(user);
-            return new RedirectToPageResult("/Users/Profile", userDto);
         }
 
         [CustomAllowAnonymous]
@@ -60,7 +52,15 @@
             _userService.Register(registerModel.ConvertToDto());
 
             _logger.LogInformation(MyLogEvents.InsertItem, $"{registerModel.FirstName} user registered.");
-            return new RedirectToPageResult("/About");
+            return new RedirectToPageResult("/Users/Login");
+        }
+
+        [HttpGet]
+        public IActionResult Profile(int id)
+        {
+            var user = _userService.GetById(id);
+            var userDto = _mapper.Map<UserDto>(user);
+            return new RedirectToPageResult("/Users/Profile", userDto);
         }
 
 

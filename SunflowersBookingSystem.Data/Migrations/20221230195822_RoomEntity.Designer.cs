@@ -12,8 +12,8 @@ using SunflowersBookingSystem.Data;
 namespace SunflowersBookingSystem.Data.Migrations
 {
     [DbContext(typeof(SunflowersDbContext))]
-    [Migration("20221213111115_ProfilePicture")]
-    partial class ProfilePicture
+    [Migration("20221230195822_RoomEntity")]
+    partial class RoomEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,9 +46,8 @@ namespace SunflowersBookingSystem.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("End Date");
 
-                    b.Property<int>("Room")
-                        .HasColumnType("int")
-                        .HasColumnName("Email");
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2")
@@ -59,6 +58,8 @@ namespace SunflowersBookingSystem.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoomId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
@@ -67,22 +68,82 @@ namespace SunflowersBookingSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ArriveTime = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            ArriveTime = new DateTime(2022, 12, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Comment = "It was aight",
-                            EndDate = new DateTime(2022, 12, 13, 11, 11, 15, 619, DateTimeKind.Utc).AddTicks(2005),
-                            Room = 1408,
-                            StartDate = new DateTime(2022, 12, 13, 13, 11, 15, 619, DateTimeKind.Local).AddTicks(1975),
+                            EndDate = new DateTime(2022, 12, 30, 19, 58, 21, 799, DateTimeKind.Utc).AddTicks(5243),
+                            RoomId = 1,
+                            StartDate = new DateTime(2022, 12, 30, 21, 58, 21, 799, DateTimeKind.Local).AddTicks(5212),
                             UserId = 3
                         },
                         new
                         {
                             Id = 2,
-                            ArriveTime = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            ArriveTime = new DateTime(2022, 12, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Comment = "same",
-                            EndDate = new DateTime(2022, 12, 13, 11, 11, 15, 619, DateTimeKind.Utc).AddTicks(2010),
-                            Room = 404,
-                            StartDate = new DateTime(2022, 12, 13, 13, 11, 15, 619, DateTimeKind.Local).AddTicks(2009),
+                            EndDate = new DateTime(2022, 12, 30, 19, 58, 21, 799, DateTimeKind.Utc).AddTicks(5249),
+                            RoomId = 2,
+                            StartDate = new DateTime(2022, 12, 30, 21, 58, 21, 799, DateTimeKind.Local).AddTicks(5247),
                             UserId = 3
+                        });
+                });
+
+            modelBuilder.Entity("SunflowersBookingSystem.Data.Models.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Booked")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rooms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Booked = true,
+                            Capacity = 2,
+                            Number = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Booked = true,
+                            Capacity = 2,
+                            Number = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Booked = false,
+                            Capacity = 4,
+                            Number = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Booked = false,
+                            Capacity = 4,
+                            Number = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Booked = false,
+                            Capacity = 4,
+                            Number = 5
                         });
                 });
 
@@ -167,13 +228,26 @@ namespace SunflowersBookingSystem.Data.Migrations
 
             modelBuilder.Entity("SunflowersBookingSystem.Data.Models.Reservation", b =>
                 {
+                    b.HasOne("SunflowersBookingSystem.Data.Models.Room", "Room")
+                        .WithMany("Reservations")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SunflowersBookingSystem.Data.Models.User", "User")
                         .WithMany("Reservations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Room");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SunflowersBookingSystem.Data.Models.Room", b =>
+                {
+                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("SunflowersBookingSystem.Data.Models.User", b =>
