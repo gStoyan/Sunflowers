@@ -6,6 +6,7 @@
     using Microsoft.Extensions.Logging;
     using SunflowersBookingSystem.Data;
     using SunflowersBookingSystem.Data.Models;
+    using SunflowersBookingSystem.Services.Helpers;
     using SunflowersBookingSystem.Services.Models.Reservations;
 
     public class ReservationServices : IReservationServices
@@ -24,7 +25,19 @@
 
         public void Create(ReservationDto reservationDto)
         {
-            throw new NotImplementedException();
+            _context.Reservations.Add(new Reservation()
+            {
+                ArriveTime = reservationDto.ArriveTime,
+                Comment = reservationDto.Comment,
+                EndDate = reservationDto.EndDate,
+                StartDate = reservationDto.StartDate,
+                UserId = reservationDto.UserId
+            });
+
+            _context.SaveChanges();
+
+            _logger.LogInformation(ServicesLogEvents.UsersOperation,
+                $"Reservation made on {reservationDto.StartDate} in room {reservationDto.Room}.");
         }
 
         public void Delete(int id)

@@ -9,6 +9,12 @@
 
     <div id="collapse" class="show">
         <form>
+            <label for="comment">Comment</label>
+            <input id="comment" asp-for="Comment" />
+            <input id="comment" asp-for="Comment" />
+            <input id="comment" asp-for="Comment" />
+            <input id="comment" asp-for="Comment" />
+            <input id="comment" asp-for="Comment" />
             <input id="comment" asp-for="Comment" />
         </form>
     </div>
@@ -22,7 +28,7 @@
             <div class="col-md-2 col-xl-1" onclick="toggle()">
                 <div class="card bg-c-blue order-card">
                     <div class="card-block">
-                        <h6 class="m-b-20">@Model.Days[i].State.ReservedRooms</h6>
+                        <h6 class="m-b-20">@Model.Days[i].State.FreeRooms</h6>
                         <h3 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>@Model.Days[i].Date</span></h3>
                     </div>
                 </div>

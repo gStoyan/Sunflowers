@@ -1,4 +1,4 @@
-﻿namespace SunflowersBookingSystem.Web.Extensions
+﻿namespace SunflowersBookingSystem.Services.Extensions
 {
     public static class DateTimeExtensions
     {

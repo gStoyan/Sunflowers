@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SunflowersBookingSystem.Services.Extensions;
 using SunflowersBookingSystem.Services.Reservations;
-using SunflowersBookingSystem.Web.Extensions;
 using SunflowersBookingSystem.Web.Models.Calendar;
 
 namespace SunflowersBookingSystem.Web.Pages.Calendar
@@ -28,10 +28,13 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
         }
 
         public List<Day> Days { get; set; }
-
         public int Month { get; set; }
-
+        public int Room { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime ArriveTime { get; set; }
         public string Comment { get; set; }
+        public int UserId { get; set; }
 
         private List<Day> GetDaysWithReservations()
         {
