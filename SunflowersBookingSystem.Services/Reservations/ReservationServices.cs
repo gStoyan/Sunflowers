@@ -26,8 +26,8 @@
 
         public void Create(ReservationDto reservationDto)
         {
-            var room = _context
-                .Rooms
+            var rooms = _context.Rooms.ToList();
+            var room = rooms
                 .FirstOrDefault(r => r.Reservations
                             .Any(res => !res.EndDate.IsBetween(reservationDto.StartDate, reservationDto.EndDate) &&
                                 res.StartDate.IsBetween(reservationDto.StartDate, reservationDto.EndDate)));
@@ -51,7 +51,7 @@
             _context.SaveChanges();
 
             _logger.LogInformation(ServicesLogEvents.UsersOperation,
-                $"Reservation made on {reservationDto.StartDate} in room {reservationDto.Room}.");
+                $"Reservation made on {reservationDto.StartDate} in room {room.Number}.");
         }
 
         public void Delete(int id)

@@ -12,8 +12,7 @@
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Token, opt => opt.Ignore());
 
-            CreateMap<Reservation, ReservationDto>()
-                .ForMember(dest => dest.Room, opt => opt.Ignore());
+            CreateMap<Reservation, ReservationDto>();
 
 
 

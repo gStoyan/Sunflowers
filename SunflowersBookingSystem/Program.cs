@@ -32,6 +32,7 @@ builder.Services.AddMvc(options => options.EnableEndpointRouting = false)
 	.AddNewtonsoftJson(o => o.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>

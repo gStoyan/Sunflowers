@@ -26,11 +26,5 @@
                 $"User with Id: {HttpContext.User.Identities.First().Claims.First(c => c.Type == "UserId").Value} accessed calendar page");
             return new RedirectToPageResult("/Calendar/Index", new { month = month });
         }
-
-        [HttpPost("CreateReservation")]
-        public async Task<IActionResult> CreateReservation(Index model)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

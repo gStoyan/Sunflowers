@@ -8,16 +8,32 @@
 <div class="container">
 
     <div id="collapse" class="show">
-        <form>
-            <label for="comment">Comment</label>
-            <input id="comment" asp-for="Comment" />
-            <input id="comment" asp-for="Comment" />
-            <input id="comment" asp-for="Comment" />
-            <input id="comment" asp-for="Comment" />
-            <input id="comment" asp-for="Comment" />
-            <input id="comment" asp-for="Comment" />
+        <form method="post">
+            <div  class="form-outline mb-4 align-self-center">
+                <label class="form-label" for="comment">Comment</label>
+                <input type="text" id="comment" asp-for="Comment" class="form-control-sm" />
+            </div>
+
+            <div  class="form-outline mb-4 align-self-center">
+                <label class="form-label" for="startDate">Start</label>
+                <input class="form-control-sm" type="date" id="startDate" asp-for="StartDate" />
+            </div>
+
+            <div  class="form-outline mb-4 align-self-center">
+                <label class="form-label" for="endDate">End</label>
+                <input class="form-control-sm" type="date" id="endDate" asp-for="EndDate" />
+            </div>
+
+            <div class="form-outline mb-4 align-self-center">
+                <label class="form-label" for="arrivalTime">Arrival Time</label>
+                <input class="form-control-sm" type="time" id="arrivalTime" asp-for="ArriveTime" />
+
+                <button type="submit" class="btn btn-primary btn-block">Make Reservation</button>
+            </div>
+
         </form>
     </div>
+    <br/>
     @for (int i = 1; i < 13; i++)
     {
         <a asp-controller="Calendar" asp-action="Index" asp-route-month=@i>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i)</a>
