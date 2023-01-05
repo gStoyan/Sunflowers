@@ -63,8 +63,8 @@
         {
             _logger.LogInformation(ServicesLogEvents.UsersOperation, $"{model.FirstName} is trying to register.");
             // validate
-            if (_context.Users.Any(x => x.FirstName == model.FirstName))
-                throw new Exception("Username '" + model.FirstName + "' is already taken");
+            if (_context.Users.Any(x => x.Email == model.Email))
+                throw new Exception("Username '" + model.Email + "' is already taken");
 
             // map model to new user object
             var user = _mapper.Map<User>(model);

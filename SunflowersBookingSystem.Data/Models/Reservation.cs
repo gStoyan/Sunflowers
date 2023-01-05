@@ -27,9 +27,7 @@
         [MaxLength(245)]
         public string Comment { get; set; }
 
-        public Room Room { get; set; }
-
-        public int RoomId { get; set; }
+        public List<Room> Rooms { get; set; } = new List<Room>();
 
         public int UserId { get; set; }
 

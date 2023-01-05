@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using SunflowersBookingSystem.Data;
     using SunflowersBookingSystem.Data.Models;
@@ -26,11 +27,12 @@
 
         public void Create(ReservationDto reservationDto)
         {
-            var rooms = _context.Rooms.ToList();
+            var rooms = _context.Rooms.Include(r => r.Reservations).ToList();
             var room = rooms
-                .FirstOrDefault(r => r.Reservations
-                            .Any(res => !res.EndDate.IsBetween(reservationDto.StartDate, reservationDto.EndDate) &&
-                                res.StartDate.IsBetween(reservationDto.StartDate, reservationDto.EndDate)));
+                .Where(r => r.Reservations
+                .Any(res => !res.StartDate.IsBetween(reservationDto.StartDate, reservationDto.EndDate) &&
+                !res.EndDate.IsBetween(reservationDto.StartDate, reservationDto.EndDate))).FirstOrDefault();
+
 
             if (room == null)
             {
@@ -38,20 +40,20 @@
                 throw new ArgumentNullException("No Rooms Found");
             }
 
-            _context.Reservations.Add(new Reservation()
+            var reservation = new Reservation()
             {
                 ArriveTime = reservationDto.ArriveTime,
                 Comment = reservationDto.Comment,
                 EndDate = reservationDto.EndDate,
                 StartDate = reservationDto.StartDate,
-                RoomId = room.Id,
                 UserId = reservationDto.UserId
-            });
-
+            };
+            reservation.Rooms.Add(room);
+            _context.Reservations.Add(reservation);
             _context.SaveChanges();
 
             _logger.LogInformation(ServicesLogEvents.UsersOperation,
-                $"Reservation made on {reservationDto.StartDate} in room {room.Number}.");
+                $"Reservation made on {reservationDto.StartDate} in room {room.Id}.");
         }
 
         public void Delete(int id)

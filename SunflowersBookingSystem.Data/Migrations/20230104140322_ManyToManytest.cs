@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SunflowersBookingSystem.Data.Migrations
 {
-    public partial class RoomEntity : Migration
+    public partial class ManyToManytest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,22 +53,39 @@ namespace SunflowersBookingSystem.Data.Migrations
                     EndDate = table.Column<DateTime>(name: "End Date", type: "datetime2", nullable: false),
                     ArrivalTime = table.Column<DateTime>(name: "Arrival Time", type: "datetime2", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(245)", maxLength: 245, nullable: true),
-                    RoomId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservations_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Reservations_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReservationRooms",
+                columns: table => new
+                {
+                    ReservationsId = table.Column<int>(type: "int", nullable: false),
+                    RoomsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReservationRooms", x => new { x.ReservationsId, x.RoomsId });
+                    table.ForeignKey(
+                        name: "FK_ReservationRooms_Reservations_ReservationsId",
+                        column: x => x.ReservationsId,
+                        principalTable: "Reservations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReservationRooms_Rooms_RoomsId",
+                        column: x => x.RoomsId,
+                        principalTable: "Rooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -79,7 +96,7 @@ namespace SunflowersBookingSystem.Data.Migrations
                 values: new object[,]
                 {
                     { 1, true, 2, 1 },
-                    { 2, true, 2, 2 },
+                    { 2, false, 2, 2 },
                     { 3, false, 4, 3 },
                     { 4, false, 4, 4 },
                     { 5, false, 4, 5 }
@@ -97,18 +114,18 @@ namespace SunflowersBookingSystem.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Reservations",
-                columns: new[] { "Id", "Arrival Time", "Comment", "End Date", "RoomId", "Start Date", "UserId" },
-                values: new object[] { 1, new DateTime(2022, 12, 30, 0, 0, 0, 0, DateTimeKind.Local), "It was aight", new DateTime(2022, 12, 30, 19, 58, 21, 799, DateTimeKind.Utc).AddTicks(5243), 1, new DateTime(2022, 12, 30, 21, 58, 21, 799, DateTimeKind.Local).AddTicks(5212), 3 });
+                columns: new[] { "Id", "Arrival Time", "Comment", "End Date", "Start Date", "UserId" },
+                values: new object[] { 1, new DateTime(2023, 1, 4, 0, 0, 0, 0, DateTimeKind.Local), "It was aight", new DateTime(2023, 1, 4, 14, 3, 22, 338, DateTimeKind.Utc).AddTicks(5208), new DateTime(2023, 1, 4, 16, 3, 22, 338, DateTimeKind.Local).AddTicks(5167), 3 });
 
             migrationBuilder.InsertData(
                 table: "Reservations",
-                columns: new[] { "Id", "Arrival Time", "Comment", "End Date", "RoomId", "Start Date", "UserId" },
-                values: new object[] { 2, new DateTime(2022, 12, 30, 0, 0, 0, 0, DateTimeKind.Local), "same", new DateTime(2022, 12, 30, 19, 58, 21, 799, DateTimeKind.Utc).AddTicks(5249), 2, new DateTime(2022, 12, 30, 21, 58, 21, 799, DateTimeKind.Local).AddTicks(5247), 3 });
+                columns: new[] { "Id", "Arrival Time", "Comment", "End Date", "Start Date", "UserId" },
+                values: new object[] { 2, new DateTime(2023, 1, 4, 0, 0, 0, 0, DateTimeKind.Local), "same", new DateTime(2023, 1, 4, 14, 3, 22, 338, DateTimeKind.Utc).AddTicks(5215), new DateTime(2023, 1, 4, 16, 3, 22, 338, DateTimeKind.Local).AddTicks(5213), 3 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservations_RoomId",
-                table: "Reservations",
-                column: "RoomId");
+                name: "IX_ReservationRooms_RoomsId",
+                table: "ReservationRooms",
+                column: "RoomsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservations_UserId",
@@ -118,6 +135,9 @@ namespace SunflowersBookingSystem.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ReservationRooms");
+
             migrationBuilder.DropTable(
                 name: "Reservations");
 

@@ -76,6 +76,5 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
 
             return days;
         }
-
     }
 }

@@ -22,6 +22,21 @@ namespace SunflowersBookingSystem.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("ReservationRoom", b =>
+                {
+                    b.Property<int>("ReservationsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReservationsId", "RoomsId");
+
+                    b.HasIndex("RoomsId");
+
+                    b.ToTable("ReservationRooms", (string)null);
+                });
+
             modelBuilder.Entity("SunflowersBookingSystem.Data.Models.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -44,9 +59,6 @@ namespace SunflowersBookingSystem.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("End Date");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("Start Date");
@@ -56,8 +68,6 @@ namespace SunflowersBookingSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoomId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
@@ -66,21 +76,19 @@ namespace SunflowersBookingSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ArriveTime = new DateTime(2022, 12, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            ArriveTime = new DateTime(2023, 1, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             Comment = "It was aight",
-                            EndDate = new DateTime(2022, 12, 30, 19, 58, 21, 799, DateTimeKind.Utc).AddTicks(5243),
-                            RoomId = 1,
-                            StartDate = new DateTime(2022, 12, 30, 21, 58, 21, 799, DateTimeKind.Local).AddTicks(5212),
+                            EndDate = new DateTime(2023, 1, 4, 14, 3, 22, 338, DateTimeKind.Utc).AddTicks(5208),
+                            StartDate = new DateTime(2023, 1, 4, 16, 3, 22, 338, DateTimeKind.Local).AddTicks(5167),
                             UserId = 3
                         },
                         new
                         {
                             Id = 2,
-                            ArriveTime = new DateTime(2022, 12, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            ArriveTime = new DateTime(2023, 1, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             Comment = "same",
-                            EndDate = new DateTime(2022, 12, 30, 19, 58, 21, 799, DateTimeKind.Utc).AddTicks(5249),
-                            RoomId = 2,
-                            StartDate = new DateTime(2022, 12, 30, 21, 58, 21, 799, DateTimeKind.Local).AddTicks(5247),
+                            EndDate = new DateTime(2023, 1, 4, 14, 3, 22, 338, DateTimeKind.Utc).AddTicks(5215),
+                            StartDate = new DateTime(2023, 1, 4, 16, 3, 22, 338, DateTimeKind.Local).AddTicks(5213),
                             UserId = 3
                         });
                 });
@@ -118,7 +126,7 @@ namespace SunflowersBookingSystem.Data.Migrations
                         new
                         {
                             Id = 2,
-                            Booked = true,
+                            Booked = false,
                             Capacity = 2,
                             Number = 2
                         },
@@ -224,28 +232,30 @@ namespace SunflowersBookingSystem.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SunflowersBookingSystem.Data.Models.Reservation", b =>
+            modelBuilder.Entity("ReservationRoom", b =>
                 {
-                    b.HasOne("SunflowersBookingSystem.Data.Models.Room", "Room")
-                        .WithMany("Reservations")
-                        .HasForeignKey("RoomId")
+                    b.HasOne("SunflowersBookingSystem.Data.Models.Reservation", null)
+                        .WithMany()
+                        .HasForeignKey("ReservationsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SunflowersBookingSystem.Data.Models.Room", null)
+                        .WithMany()
+                        .HasForeignKey("RoomsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SunflowersBookingSystem.Data.Models.Reservation", b =>
+                {
                     b.HasOne("SunflowersBookingSystem.Data.Models.User", "User")
                         .WithMany("Reservations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Room");
-
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SunflowersBookingSystem.Data.Models.Room", b =>
-                {
-                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("SunflowersBookingSystem.Data.Models.User", b =>

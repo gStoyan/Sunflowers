@@ -18,6 +18,6 @@
 
         public bool Booked { get; set; }
 
-        public List<Reservation> Reservations { get; set; }
+        public List<Reservation> Reservations { get; set; } = new List<Reservation>();
     }
 }
