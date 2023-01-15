@@ -29,9 +29,8 @@
         {
             var rooms = _context.Rooms.Include(r => r.Reservations).ToList();
             var room = rooms
-                .Where(r => r.Reservations
-                .Any(res => !res.StartDate.IsBetween(reservationDto.StartDate, reservationDto.EndDate) &&
-                !res.EndDate.IsBetween(reservationDto.StartDate, reservationDto.EndDate))).FirstOrDefault();
+                .Where(r => !r.Reservations.Any(res => res.StartDate.IsBetween(reservationDto.StartDate, reservationDto.EndDate) &&
+                res.EndDate.IsBetween(reservationDto.StartDate, reservationDto.EndDate))).FirstOrDefault();
 
 
             if (room == null)

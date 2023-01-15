@@ -42,7 +42,7 @@
             Response.Cookies.Append("User", response.Email, new CookieOptions { MaxAge = TimeSpan.FromDays(1) });
             response.Token = null;
 
-            return new RedirectToPageResult("/Users/Profile", response);
+            return new RedirectToPageResult("/Users/Profile", response.Id);
         }
 
         [CustomAllowAnonymous]

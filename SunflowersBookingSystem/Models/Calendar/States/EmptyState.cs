@@ -31,12 +31,12 @@
         public override void ReserveRooms(int roomsCount)
         {
             reservedRooms += roomsCount;
-            Console.WriteLine("No reservations to cancel");
+            StateChangeCheck();
         }
 
         private void StateChangeCheck()
         {
-            if (reservedRooms < upperLimit)
+            if (reservedRooms > upperLimit)
             {
                 day.State = new HalfFullState(this);
             }

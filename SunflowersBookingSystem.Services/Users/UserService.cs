@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using BCrypt.Net;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using SunflowersBookingSystem.Data;
     using SunflowersBookingSystem.Data.Models;
@@ -26,7 +27,7 @@
 
         public UserDto Authenticate(AuthenticateRequestDto model)
         {
-            var user = _context.Users.SingleOrDefault(x => x.Email == model.Email);
+            var user = _context.Users.Include(u => u.Reservations).SingleOrDefault(x => x.Email == model.Email);
 
             // validate
             if (user == null || !BCrypt.Verify(model.Password, user.PasswordHash))
@@ -54,7 +55,8 @@
 
         public User GetById(int id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var users = _context.Users.Include(u => u.Reservations);
+            var user = users.FirstOrDefault(x => x.Id == id);
 
             return user;
         }

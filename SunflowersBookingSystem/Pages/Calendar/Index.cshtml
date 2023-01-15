@@ -4,6 +4,7 @@
 @model SunflowersBookingSystem.Web.Pages.Calendar.IndexModel
 @{
 }
+
 <h2>Please click on the date you want to make your reservation!</h2>
 <div class="container">
 
@@ -27,7 +28,8 @@
             <div class="form-outline mb-4 align-self-center">
                 <label class="form-label" for="arrivalTime">Arrival Time</label>
                 <input class="form-control-sm" type="time" id="arrivalTime" asp-for="ArriveTime" />
-
+                
+                <input hidden type="number" id="month" asp-for="Month"/>
                 <button type="submit" class="btn btn-primary btn-block">Make Reservation</button>
             </div>
 
@@ -41,11 +43,18 @@
     <div class="row">
         @for (int i = 0; i < Model.Days.Count && i < 10; i++)
         {
-            <div class="col-md-2 col-xl-1" onclick="toggle()">
-                <div class="card bg-c-blue order-card">
+            string state = @Model.Days[i].State.GetType().Name;
+            <div class="col-md-2 col-xl-1" onclick="toggle(this)">
+                <div class="card @if(state == "EmptyState"){
+            <text>bg-c-blue</text>
+}else if(state == "HalfFullState"){
+            <text>bg-c-yellow</text>
+}else if(state == "FullState"){
+            <text>bg-c-red</text>
+} order-card">
                     <div class="card-block">
-                        <h6 class="m-b-20">@Model.Days[i].State.FreeRooms</h6>
-                        <h6 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>@Model.Days[i].Date</span></h6>
+                            <h6 class="m-b-20">Free Rooms: @Model.Days[i].State.FreeRooms</h6>
+                        <h6 class="text-right"><i class="fa fa-cart-plus f-left"></i><span id="date@i">@Model.Days[i].Date.ToString("d/M/yy")</span></h6>
                     </div>
                 </div>
             </div>
@@ -55,11 +64,16 @@
     <div class="row">
         @for (int i = 10; i < Model.Days.Count && i < 20; i++)
         {
-            <div class="col-md-2 col-xl-1">
-                <div class="card bg-c-blue order-card">
+            string state = @Model.Days[i].State.GetType().Name;
+            <div class="col-md-2 col-xl-1" onclick="toggle(this)">
+                <div class="card @if(state == "EmptyState"){
+            <text>bg-c-blue</text>
+}else if(state == "HalfFullState"){
+            <text>bg-c-yellow</text>
+}else if(state == "FullState"){<text>bg-c-red</text>} order-card">
                     <div class="card-block">
-                        <h6 class="m-b-20">@Model.Days[i].State.FreeRooms</h6>
-                        <h6 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>@Model.Days[i].Date</span></h6>
+                        <h6 class="m-b-20">Free Rooms: @Model.Days[i].State.FreeRooms</h6>
+                        <h6 class="text-right"><i class="fa fa-cart-plus f-left"></i><span id="date@i">@Model.Days[i].Date.ToString("d/M/yy")</span></h6>
                     </div>
                 </div>
             </div>
@@ -69,11 +83,12 @@
     <div class="row">
         @for (int i = 20; i < Model.Days.Count; i++)
         {
-            <div class="col-md-2 col-xl-1">
+            string state = @Model.Days[i].State.GetType().Name;
+            <div class="col-md-2 col-xl-1" onclick="toggle(this)">
                 <div class="card bg-c-blue order-card">
                     <div class="card-block">
-                        <h6 class="m-b-20">@Model.Days[i].State.FreeRooms</h6>
-                        <h6 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>@Model.Days[i].Date</span></h6>
+                        <h6 class="m-b-20">Free Rooms: @Model.Days[i].State.FreeRooms</h6>
+                        <h6 class="text-right"><i class="fa fa-cart-plus f-left"></i><span id="date@i">@Model.Days[i].Date.ToString("d/M/yy")</span></h6>
                     </div>
                 </div>
             </div>
@@ -82,8 +97,4 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        toggle()
-    });
-</script>
+<script language="JavaScript" type="text/javascript" src="~/js/calendar.js" asp-append-version="true"></script>

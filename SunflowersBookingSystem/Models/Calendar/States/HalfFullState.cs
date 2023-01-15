@@ -16,7 +16,7 @@
         private void Initialize()
         {
             lowerLimit = 2;
-            upperLimit = 6;
+            upperLimit = 5;
         }
 
         public override void CancelReservation(int roomsCount)

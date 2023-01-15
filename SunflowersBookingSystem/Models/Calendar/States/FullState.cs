@@ -15,7 +15,7 @@
 
         private void Initialize()
         {
-            lowerLimit = 6;
+            lowerLimit = 5;
             upperLimit = 7;
         }
 
@@ -38,7 +38,7 @@
                 day.State = new EmptyState(this);
             }
 
-            else if (reservedRooms > lowerLimit)
+            else if (reservedRooms < lowerLimit)
             {
                 day.State = new HalfFullState(this);
             }

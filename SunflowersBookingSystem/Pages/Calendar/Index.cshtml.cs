@@ -19,7 +19,10 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
             Days = GetDaysWithReservations(month);
         }
 
+
         public List<Day> Days { get; set; } = new List<Day>();
+
+        [BindProperty]
         public int Month { get; set; }
 
         [BindProperty]
@@ -34,8 +37,10 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
         [BindProperty]
         public string? Comment { get; set; }
 
+
         public IActionResult OnPost()
         {
+            string message = string.Empty;
             var userId = int.Parse(HttpContext.User.Identities.First().Claims.First(c => c.Type == "UserId").Value);
             var reservationDto = new ReservationDto()
             {
@@ -45,14 +50,22 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
                 StartDate = StartDate,
                 UserId = userId
             };
+            var days = GetDaysWithReservations(Month);
 
+            //Loop through the days in the month to see if there are free rooms for the given reservation
+            foreach (var day in days)
+            {
+                if (day.Date.IsBetween(reservationDto.StartDate, reservationDto.EndDate) && day.State.FreeRooms <= 0)
+                {
+                    message = $"Sorry! There are no available rooms on this date: {day.Date}";
+                    return new RedirectToPageResult("/InformationPage", new { message = message });
+                }
+            }
             _reservationServices.Create(reservationDto);
 
 
-            //_logger.LogInformation(MyLogEvents.GetItem,
-            //$"User with Id: {userId} created a reservation from {model.StartDate} untill {model.EndDate}");
-
-            return new RedirectToPageResult("/About");
+            message = $"Success! You created a reservation: On {reservationDto.StartDate} until {reservationDto.EndDate}.";
+            return new RedirectToPageResult("/InformationPage", new { message = message });
 
         }
 
@@ -68,8 +81,12 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
             for (var date = new DateTime(DateTime.Now.Year, month, 1); date.Month == month; date = date.AddDays(1))
             {
                 var day = new Day(date);
-                var reservationsCount = reservations.Where(d => date.IsBetween(d.StartDate, d.EndDate)).Count();
+                var reservationsCount = reservations
+                    .Where(d => date.IsBetween(d.StartDate, d.EndDate))
+                    .Count();
                 day.ReserveRooms(reservationsCount);
+                //call stateChangeCheck
+                day.ReserveRooms(0);
 
                 days.Add(day);
             }
