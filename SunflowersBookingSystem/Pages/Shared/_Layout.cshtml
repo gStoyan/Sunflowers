@@ -32,19 +32,11 @@
                             <i class="bi bi-calendar-check mx-auto mb-1" width="24" height="24"></i>
                             Callender
                         </a>
-                    </li>
-                    if (User.IsInRole("user"))
-                    {
-                        <li id="navOrders">
-                            <a href="#" class="nav-link text-white">
-                                Orders
-                            </a>
-                        </li>
-                    }                
+                    </li>                    
                 }
             
             <li id="navContacts">
-              <a href="#" class="nav-link text-white">
+                            <a asp-page="/About" class="nav-link text-white">
                 Contacts
               </a>
             </li>

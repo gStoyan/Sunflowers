@@ -26,7 +26,7 @@
                    role="button" rel="nofollow" asp-controller="Users" asp-action="LogOut">Log out</a>
                     <a class="btn btn-outline-light btn-lg m-2" asp-controller="Users" asp-action="Profile"
                    asp-route-id="@int.Parse(HttpContext.User.Identities.First().Claims.First(c=>c.Type == "UserId").Value)" asp-va role="button">Profile</a>
-                    <a class="btn btn-outline-light btn-lg m-2" href="#"
+                    <a class="btn btn-outline-light btn-lg m-2" asp-controller="Calendar" asp-action="Index" asp-route-month="@DateTime.Now.Month"
                         role="button">Make a reservation</a>
                 }
             </div>

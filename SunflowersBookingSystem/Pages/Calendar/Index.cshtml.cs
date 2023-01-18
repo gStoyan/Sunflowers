@@ -10,6 +10,7 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
     public class IndexModel : PageModel
     {
         private IReservationServices _reservationServices;
+
         public IndexModel(IReservationServices reservationServices)
         {
             _reservationServices = reservationServices;
@@ -57,15 +58,12 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
             {
                 if (day.Date.IsBetween(reservationDto.StartDate, reservationDto.EndDate) && day.State.FreeRooms <= 0)
                 {
-                    message = $"Sorry! There are no available rooms on this date: {day.Date}";
-                    return new RedirectToPageResult("/InformationPage", new { message = message });
+                    return new RedirectToPageResult("/InformationPage", new { message = Constants.NoFreeRooms });
                 }
             }
+
             _reservationServices.Create(reservationDto);
-
-
-            message = $"Success! You created a reservation: On {reservationDto.StartDate} until {reservationDto.EndDate}.";
-            return new RedirectToPageResult("/InformationPage", new { message = message });
+            return new RedirectToPageResult("/InformationPage", new { message = Constants.SuccessfullReservation });
 
         }
 

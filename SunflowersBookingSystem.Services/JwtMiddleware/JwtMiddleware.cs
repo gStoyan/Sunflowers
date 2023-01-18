@@ -33,7 +33,6 @@
                 context.User = new ClaimsPrincipal(identity);
             }
 
-
             await _next(context);
         }
     }
