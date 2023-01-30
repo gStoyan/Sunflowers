@@ -32,7 +32,7 @@
 
             <!-- Password input -->
             <div style="margin-left:35%" class="form-outline mb-4">
-                <input required type="password" id="loginPassword" asp-for="Password" class="form-control" />
+                <input required type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" id="loginPassword" asp-for="Password" class="form-control" />
                 <label class="form-label" for="loginPassword">Password</label>
             </div>
 
@@ -43,5 +43,3 @@
         </form>
     </div>
 </div>
-    @{
-    }

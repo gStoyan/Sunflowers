@@ -15,6 +15,8 @@ namespace SunflowersBookingSystem.Web.Models
         public string SecondName { get; set; }
 
         [Required]
+        [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
+            ErrorMessage = "Password must be minimum 8 characters. Contain at least one letter and one number")]
         public string Password { get; set; }
 
         public string? Phone { get; set; }
