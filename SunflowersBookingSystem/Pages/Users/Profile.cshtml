@@ -112,12 +112,23 @@
                                 foreach (var reservation in Model.LoggedUser.Reservations)
                                 {
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <label>Reservation</label>
                                         </div>
                                         <div class="col-md-6">
                                         <p>From @reservation.StartDate.ToShortDateString() untill @reservation.EndDate.ToShortDateString()</p>
                                         </div>
+
+                                        @if (reservation.StartDate>DateTime.Now)
+                                        {
+                                            <div class="col-md-2">
+                                                <form asp-controller="Users" asp-action="CancelReservation" method="post">
+                                                    <input hidden type="number" id="reservationId" asp-for="ReservationId" value="@reservation.Id" />
+                                                    <button type="submit" class="btn btn-primary btn-block">Cancel</button>
+                                                </form>
+                                            </div>
+                                        }
+                                        
                                     </div>
                                 }                                
                             }

@@ -57,7 +57,11 @@
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var reservations = _context.Reservations.Include(r => r.Rooms).Include(r => r.User);
+            var reservation = reservations.FirstOrDefault(r => r.Id == id);
+
+            _context.Reservations.Remove(reservation);
+            _context.SaveChanges();
         }
 
         public IEnumerable<ReservationDto> GetAll()

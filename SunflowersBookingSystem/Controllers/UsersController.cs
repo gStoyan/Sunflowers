@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using SunflowersBookingSystem.Services.Helpers;
+    using SunflowersBookingSystem.Services.Reservations;
     using SunflowersBookingSystem.Services.Users;
     using SunflowersBookingSystem.Web.Attributes;
     using SunflowersBookingSystem.Web.Models;
@@ -16,18 +17,21 @@
     public class UsersController : Controller
     {
         private IUserService _userService;
+        private IReservationServices _reservationServices;
         private readonly AppSettings _appSettings;
         private readonly ILogger _logger;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IMapper _mapper;
 
         public UsersController(IUserService userService,
+            IReservationServices reservationServices,
             IOptions<AppSettings> appSettings,
             ILogger<UsersController> logger,
             IWebHostEnvironment hostingEnvironment,
             IMapper mapper)
         {
             _userService = userService;
+            _reservationServices = reservationServices;
             _appSettings = appSettings.Value;
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
