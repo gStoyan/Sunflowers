@@ -5,7 +5,10 @@ using Serilog;
 using SunflowersBookingSystem.Data;
 using SunflowersBookingSystem.Services.Helpers;
 using SunflowersBookingSystem.Services.JwtMiddleware;
+using SunflowersBookingSystem.Services.Mailing;
+using SunflowersBookingSystem.Services.Mailing.Interfaces;
 using SunflowersBookingSystem.Services.Mapping;
+using SunflowersBookingSystem.Services.Models.Mailing;
 using SunflowersBookingSystem.Services.Reservations;
 using SunflowersBookingSystem.Services.Users;
 using SunflowersBookingSystem.Services.Users.Interfaces;
@@ -62,7 +65,11 @@ builder.Services.AddSwaggerGen(c =>
 		}
 	});
 });
-
+var emailConfig = builder.Configuration
+		.GetSection("EmailConfiguration")
+		.Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSenderServices, EmailSenderServices>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));

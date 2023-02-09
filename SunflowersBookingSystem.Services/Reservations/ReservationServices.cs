@@ -51,6 +51,7 @@
             _context.Reservations.Add(reservation);
             _context.SaveChanges();
 
+
             _logger.LogInformation(ServicesLogEvents.UsersOperation,
                 $"Reservation made on {reservationDto.StartDate} in room {room.Id}.");
         }

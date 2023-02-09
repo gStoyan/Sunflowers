@@ -3,6 +3,7 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using SunflowersBookingSystem.Services.Extensions;
+    using SunflowersBookingSystem.Services.Mailing.Interfaces;
     using SunflowersBookingSystem.Services.Models.Reservations;
     using SunflowersBookingSystem.Services.Reservations;
     using SunflowersBookingSystem.Web.Models.Calendar;
@@ -11,9 +12,11 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
     {
         private IReservationServices _reservationServices;
 
-        public IndexModel(IReservationServices reservationServices)
+        private readonly IEmailSenderServices _emailSenderServices;
+        public IndexModel(IReservationServices reservationServices, IEmailSenderServices emailSenderServices)
         {
             _reservationServices = reservationServices;
+            _emailSenderServices = emailSenderServices;
         }
         public void OnGet(int month)
         {
@@ -43,6 +46,7 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
         {
             string message = string.Empty;
             var userId = int.Parse(HttpContext.User.Identities.First().Claims.First(c => c.Type == "UserId").Value);
+            var userEmail = HttpContext.User.Identities.First().Claims.First(c => c.Type == "Email").Value;
             var reservationDto = new ReservationDto()
             {
                 ArriveTime = ArriveTime,
@@ -63,6 +67,7 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
             }
 
             _reservationServices.Create(reservationDto);
+            _emailSenderServices.SendReservationConfirmationEmail(userEmail, reservationDto.StartDate, reservationDto.EndDate);
             return new RedirectToPageResult("/InformationPage", new { message = Constants.SuccessfullReservation });
 
         }
