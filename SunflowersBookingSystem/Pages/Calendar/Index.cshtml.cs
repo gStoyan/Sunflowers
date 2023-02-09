@@ -4,25 +4,28 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using SunflowersBookingSystem.Services.Extensions;
     using SunflowersBookingSystem.Services.Mailing.Interfaces;
+    using SunflowersBookingSystem.Services.Models.Mailing;
     using SunflowersBookingSystem.Services.Models.Reservations;
     using SunflowersBookingSystem.Services.Reservations;
+    using SunflowersBookingSystem.Services.Users;
     using SunflowersBookingSystem.Web.Models.Calendar;
 
     public class IndexModel : PageModel
     {
         private IReservationServices _reservationServices;
-
         private readonly IEmailSenderServices _emailSenderServices;
-        public IndexModel(IReservationServices reservationServices, IEmailSenderServices emailSenderServices)
+        private readonly IUserService _userServices;
+
+        public IndexModel(IReservationServices reservationServices, IEmailSenderServices emailSenderServices, IUserService userService)
         {
             _reservationServices = reservationServices;
             _emailSenderServices = emailSenderServices;
+            _userServices = userService;
         }
         public void OnGet(int month)
         {
             Days = GetDaysWithReservations(month);
         }
-
 
         public List<Day> Days { get; set; } = new List<Day>();
 
@@ -41,12 +44,10 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
         [BindProperty]
         public string? Comment { get; set; }
 
-
         public IActionResult OnPost()
         {
             string message = string.Empty;
             var userId = int.Parse(HttpContext.User.Identities.First().Claims.First(c => c.Type == "UserId").Value);
-            var userEmail = HttpContext.User.Identities.First().Claims.First(c => c.Type == "Email").Value;
             var reservationDto = new ReservationDto()
             {
                 ArriveTime = ArriveTime,
@@ -55,21 +56,21 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
                 StartDate = StartDate,
                 UserId = userId
             };
-            var days = GetDaysWithReservations(Month);
-
-            //Loop through the days in the month to see if there are free rooms for the given reservation
-            foreach (var day in days)
+            if (!CheckReservationIsValid(reservationDto))
             {
-                if (day.Date.IsBetween(reservationDto.StartDate, reservationDto.EndDate) && day.State.FreeRooms <= 0)
-                {
-                    return new RedirectToPageResult("/InformationPage", new { message = Constants.NoFreeRooms });
-                }
+                return new RedirectToPageResult("/InformationPage", new { message = Constants.NoFreeRooms });
             }
-
+            var user = _userServices.GetById(userId);
             _reservationServices.Create(reservationDto);
-            _emailSenderServices.SendReservationConfirmationEmail(userEmail, reservationDto.StartDate, reservationDto.EndDate);
+            var confirmationMessageBody =
+                new ConfirmationMessageBoddy(
+                    user.Email,
+                    user.FirstName,
+                    user.SecondName,
+                    reservationDto.StartDate,
+                    reservationDto.EndDate);
+            _emailSenderServices.SendReservationConfirmationEmail(confirmationMessageBody);
             return new RedirectToPageResult("/InformationPage", new { message = Constants.SuccessfullReservation });
-
         }
 
         private List<Day> GetDaysWithReservations(int month)
@@ -95,6 +96,22 @@ namespace SunflowersBookingSystem.Web.Pages.Calendar
             }
 
             return days;
+        }
+
+        private bool CheckReservationIsValid(ReservationDto reservationDto)
+        {
+            var days = GetDaysWithReservations(Month);
+
+            //Loop through the days in the month to see if there are free rooms for the given reservation
+            foreach (var day in days)
+            {
+                if (day.Date.IsBetween(reservationDto.StartDate, reservationDto.EndDate) && day.State.FreeRooms <= 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

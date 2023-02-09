@@ -6,6 +6,6 @@
     {
         void SendEmail(Message message);
 
-        void SendReservationConfirmationEmail(string userEmail, DateTime startDate, DateTime endDate);
+        void SendReservationConfirmationEmail(ConfirmationMessageBoddy body);
     }
 }

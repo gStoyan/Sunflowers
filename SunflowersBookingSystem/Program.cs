@@ -70,6 +70,7 @@ var emailConfig = builder.Configuration
 		.Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSenderServices, EmailSenderServices>();
+builder.Services.AddScoped<IMailMessageBuilder, MailMessageBuilder>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));

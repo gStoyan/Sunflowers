@@ -3,8 +3,6 @@
     using MailKit.Net.Smtp;
     using Microsoft.Extensions.Logging;
     using MimeKit;
-    using NPOI.XWPF.Extractor;
-    using NPOI.XWPF.UserModel;
     using SunflowersBookingSystem.Services.Helpers;
     using SunflowersBookingSystem.Services.Mailing.Interfaces;
     using SunflowersBookingSystem.Services.Models.Mailing;
@@ -26,18 +24,10 @@
             Send(emailMessage);
         }
 
-        public void SendReservationConfirmationEmail(string userEmail, DateTime startDate, DateTime endDate)
+        public void SendReservationConfirmationEmail(ConfirmationMessageBoddy body)
         {
-            XWPFDocument document = null;
-            using (FileStream file = new FileStream("../SunflowersBookingSystem.Services/Resources/ReservationConfirmation.docx", FileMode.Open, FileAccess.Read))
-            {
-                document = new XWPFDocument(file);
-                XWPFWordExtractor ex = new XWPFWordExtractor(document);
-                var emailDocumentText = ex.Text;
-
-                var emailMessage = new Message(new string[] { $"{userEmail}" }, "Reservation Confirmation", emailDocumentText);
-                SendEmail(emailMessage);
-            }
+            var confirmationMessage = _mailMessageBuilder.BuildConfirmationMessage(body);
+            SendEmail(confirmationMessage);
         }
 
         private MimeMessage CreateEmailMessage(Message message)

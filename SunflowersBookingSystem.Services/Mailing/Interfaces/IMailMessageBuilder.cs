@@ -1,7 +1,9 @@
 ﻿namespace SunflowersBookingSystem.Services.Mailing.Interfaces
 {
+    using SunflowersBookingSystem.Services.Models.Mailing;
+
     public interface IMailMessageBuilder
     {
-        void BuildConfirmationMessage(string email);
+        Message BuildConfirmationMessage(ConfirmationMessageBoddy body);
     }
 }
