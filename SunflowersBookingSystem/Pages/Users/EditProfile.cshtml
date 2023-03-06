@@ -48,7 +48,7 @@
                 <label class="form-label" for="profilePicture">Profile Picture</label>
                 <h6>Upload a different photo...</h6>
                 <img class="profile-picture" src="~/images/profileDefault.png">
-                <input id="profilePicture" asp-for="ProfilePicture"/>
+                <input required id="profilePicture" asp-for="ProfilePicture"/>
             </div>
 
             <input class="hiding" type="hidden" asp-for="Id" value="@HttpContext.User.Claims.FirstOrDefault().Value" />
