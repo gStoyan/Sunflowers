@@ -68,7 +68,7 @@
             if (_context.Users.Any(x => x.Email == model.Email))
                 throw new Exception("Username '" + model.Email + "' is already taken");
 
-            // map model to new user object
+            // map model to new user obje ct
             var user = _mapper.Map<User>(model);
 
             // hash password
