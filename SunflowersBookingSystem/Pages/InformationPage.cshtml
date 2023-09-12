@@ -3,4 +3,11 @@
 @{
 }
 
-<h2>@Model.Message</h2>
+@{
+var splitMessage = Model.Message.Split(Environment.NewLine);
+foreach (var line in splitMessage)
+            {
+                <h4>@line</h4>
+                <br />
+    }
+}

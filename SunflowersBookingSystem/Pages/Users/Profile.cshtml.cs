@@ -24,8 +24,9 @@ namespace SunflowersBookingSystem.Web.Pages.Users
             _reservationServices = reservationServices;
         }
 
-        public void OnGet(int id)
+        public void OnGet()
         {
+            var id = int.Parse(HttpContext.User.Identities.First().Claims.First(c => c.Type == "UserId").Value);
             var user = _userServices.GetById(id);
             LoggedUser = _mapper.Map<UserDto>(user);
         }

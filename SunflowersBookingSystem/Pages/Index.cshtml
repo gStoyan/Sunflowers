@@ -7,12 +7,12 @@
     ViewData["Title"] = "Index";  
 }
 
-<div id="intro-example" class="p-5 text-center bg-image">    
+<div id="intro-example" class="p-5 text-center bg-image testclass">
     <div class="mask" style="background-color: rgba(0,0,0,0.5);">
-        <div class="d-flex justify-content-center align-items-center h-100">
-            <div class="text-white">
-                <h1 class="mb-3">Welcome to "Sunflowers"</h1>
-                <h5 class="mb-4">
+        <div class="d-flex justify-content-center align-items-center h-100 hero">
+            <div class="jumboimage" class="text-white">
+                <h1 class="mb-3 hero">Welcome to "Sunflowers"</h1>
+                <h5 class="mb-4 hero">
                    The best place to relax
                 </h5>
                 @if(!User.Identity.IsAuthenticated){
@@ -22,8 +22,8 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="btn btn-outline-light btn-lg m-2"
-                   role="button" rel="nofollow" asp-controller="Users" asp-action="LogOut">Log out</a>
+                    <a class=" btn btn-outline-light btn-lg m-2 "
+                   role="button" rel="nofollow" asp-controller="Users" asp-action="LogOut" >Log out</a>
                     <a class="btn btn-outline-light btn-lg m-2" asp-controller="Users" asp-action="Profile"
                    asp-route-id="@int.Parse(HttpContext.User.Identities.First().Claims.First(c=>c.Type == "UserId").Value)" asp-va role="button">Profile</a>
                     <a class="btn btn-outline-light btn-lg m-2" asp-controller="Calendar" asp-action="Index" asp-route-month="@DateTime.Now.Month"
@@ -32,5 +32,6 @@
             </div>
         </div>
     </div>
+</div>
 
 

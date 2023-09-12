@@ -50,7 +50,7 @@
             Response.Cookies.Append("User", response.Email, new CookieOptions { MaxAge = TimeSpan.FromDays(1) });
             response.Token = null;
 
-            return new RedirectToPageResult("/Users/Profile", new { id = response.Id });
+            return new RedirectToPageResult("/Users/Profile");
         }
 
         [CustomAllowAnonymous]
@@ -68,8 +68,7 @@
         {
             _logger.LogInformation(MyLogEvents.GetItem,
                 $"User with Id {HttpContext.User.Identities.First().Claims.First(c => c.Type == "UserId").Value} entered his profile page");
-            return new RedirectToPageResult("/Users/Profile",
-                new { id = HttpContext.User.Identities.First().Claims.First(c => c.Type == "UserId").Value });
+            return new RedirectToPageResult("/Users/Profile");
         }
 
         [HttpGet("update")]
@@ -78,16 +77,19 @@
         [HttpPost("UpdatePost")]
         public async Task<IActionResult> UpdatePost([FromForm] UpdateProfileViewModel model)
         {
-            var path = Path.Combine(_hostingEnvironment.WebRootPath, "images/", model.ProfilePicture.FileName);
-            using (FileStream stream = new FileStream(path, FileMode.Create))
+            if (model.ProfilePicture != null)
             {
-                await model.ProfilePicture.CopyToAsync(stream);
-                stream.Close();
+                var path = Path.Combine(_hostingEnvironment.WebRootPath, "images/", model.ProfilePicture.FileName);
+                using (FileStream stream = new FileStream(path, FileMode.Create))
+                {
+                    await model.ProfilePicture.CopyToAsync(stream);
+                    stream.Close();
+                }
             }
 
             var response = await _userService.UpdateAsync(model.ConvertToDto());
             _logger.LogInformation(MyLogEvents.UpdateItem, $"{response.FirstName} updated his profile data.");
-            return new RedirectToPageResult("/Users/Profile", response);
+            return new RedirectToPageResult("/InformationPage", new { message = Constants.SuccessfullProfileEdit });
         }
 
 

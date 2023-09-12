@@ -11,5 +11,6 @@ namespace SunflowersBookingSystem.Web.Pages.Users
         }
 
         public UserDto LoggedUser { get; set; }
+
     }
 }

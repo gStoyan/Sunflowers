@@ -21,7 +21,7 @@
                 SecondName = SecondName,
                 Phone = Phone,
                 Country = Country,
-                ProfilePicture = ProfilePicture.FileName
+                ProfilePicture = ProfilePicture == null ? Constants.DefaultProfilePicture : ProfilePicture.FileName
             };
     }
 }
